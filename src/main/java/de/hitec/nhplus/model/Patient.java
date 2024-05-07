@@ -142,7 +142,6 @@ public class Patient extends Person {
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
                 "\nRoomnumber: " + this.roomNumber +
-                "\nAssets: " + this.assets +
                 "\n";
     }
 }
