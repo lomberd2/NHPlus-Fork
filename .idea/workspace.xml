@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="assets delete in patient.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoSetupController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/Crypto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/CryptoSetupView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoSetupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoSetupController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +170,7 @@
       <workItem from="1715064951629" duration="579000" />
       <workItem from="1715065577600" duration="94000" />
       <workItem from="1715070110762" duration="3297000" />
-      <workItem from="1715585425871" duration="1794000" />
+      <workItem from="1715585425871" duration="2696000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -193,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715070463990</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view">
+      <option name="closed" value="true" />
+      <created>1715587374350</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715587374350</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +216,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated gitignore for IntelliJ" />
     <MESSAGE value="assets delete in patient.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="assets delete in patient.java" />
+    <MESSAGE value="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view" />
+    <option name="LAST_COMMIT_MESSAGE" value="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view" />
   </component>
 </project>
