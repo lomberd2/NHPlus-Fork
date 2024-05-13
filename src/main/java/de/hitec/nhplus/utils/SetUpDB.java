@@ -55,7 +55,6 @@ public class SetUpDB {
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
                 "   roomnumber TEXT NOT NULL " +
-                // TODO - deleted assets TEXT not null
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
