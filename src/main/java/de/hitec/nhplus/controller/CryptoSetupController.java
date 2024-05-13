@@ -27,6 +27,16 @@ public class CryptoSetupController {
         try {
             var secretKey = Crypto.getKeyFromPassword(passwordBox.getText(), "salt");
             System.out.println("Secret key: \n" + Arrays.toString(secretKey.getEncoded()));
+
+            //String testString = "Hello World!";
+            //var encrypted = Crypto.encrypt(testString, secretKey);
+
+            String encrypted = "eIfg6P6aBzzk5yQmJxgi3Q=="; // "Hello World!"
+            System.out.println(encrypted);
+
+            var decrypted = Crypto.decrypt(encrypted, secretKey);
+
+            System.out.println("Decrypted: " + decrypted);
         } catch (Exception e) {
             e.printStackTrace();
         }
