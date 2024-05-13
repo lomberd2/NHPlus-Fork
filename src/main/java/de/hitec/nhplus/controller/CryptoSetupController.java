@@ -4,6 +4,7 @@ import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.Crypto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
 import java.util.Arrays;
@@ -17,6 +18,9 @@ public class CryptoSetupController {
     protected Button submitButton;
 
     @FXML
+    protected Label labelTag;
+
+    @FXML
     protected void handleSubmitButton() {
         System.out.println("Password: " + passwordBox.getText());
 
@@ -28,5 +32,10 @@ public class CryptoSetupController {
         }
 
         Main.mainWindow();
+    }
+
+    @FXML
+    public void initialize() {
+        labelTag.setText("Enter your password");
     }
 }
