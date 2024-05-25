@@ -1,6 +1,7 @@
 package de.hitec.nhplus.datastorage;
 
 import de.hitec.nhplus.model.CryptoModel;
+import de.hitec.nhplus.utils.DbUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
@@ -11,8 +12,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
 
 public class CryptoUtils {
     private final static String algorithm = "AES";
@@ -116,7 +119,7 @@ public class CryptoUtils {
 
             cryptoDao.updateCryptoModel(curCrypto);
 
-            System.out.println( Arrays.toString(DaoFactory.getAllTablesForEncryption()) );
+            System.out.println( Arrays.toString(getAllTablesForEncryption()) );
 
             // TODO remove on -release- just testing
             throw new RuntimeException("DB encryption setup failed");
@@ -135,5 +138,19 @@ public class CryptoUtils {
     public static void setDBEncrypted(boolean isDBEncrypted) {
         curCrypto.setIsDBEncrypted(isDBEncrypted);
         cryptoDao.updateCryptoModel(curCrypto);
+    }
+
+    /**
+     * This method retrieves all the table names from the database that are eligible for encryption.
+     * It filters out the 'crypto' table as it should not be encrypted.
+     *
+     * @return An array of table names that are eligible for encryption.
+     */
+    public static String[] getAllTablesForEncryption() {
+        var tables = new ArrayList<String>();
+
+        Collections.addAll(tables, Arrays.stream(DbUtils.getAllTables()).filter(s -> !s.equals("crypto") ).toArray(String[]::new));
+
+        return tables.toArray(new String[0]);
     }
 }
