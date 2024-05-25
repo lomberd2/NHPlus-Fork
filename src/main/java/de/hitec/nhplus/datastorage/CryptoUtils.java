@@ -1,5 +1,7 @@
 package de.hitec.nhplus.datastorage;
 
+import de.hitec.nhplus.model.CryptoModel;
+
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,10 +13,22 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-public class Crypto {
+public class CryptoUtils {
     public final static String algorithm = "AES";
     protected static SecretKey key = null;
     protected static String salt = "NHPlusSalt";
+
+    protected static CryptoDao cryptoDao;
+    protected static CryptoModel curCrypto;
+
+    public static void init() {
+        cryptoDao = DaoFactory.getDaoFactory().createCryptoDAO();
+        loadCryptoModel();
+    }
+
+    private static void loadCryptoModel() {
+        curCrypto = cryptoDao.getCryptoModel();
+    }
 
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -63,5 +77,16 @@ public class Crypto {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static boolean isDBEncrypted() {
+        return curCrypto.getIsDBEncrypted();
+    }
+
+    public static void setDBEncrypted(boolean isDBEncrypted) {
+        curCrypto.setIsDBEncrypted(isDBEncrypted);
+        cryptoDao.updateCryptoModel(curCrypto);
+
+        loadCryptoModel();
     }
 }

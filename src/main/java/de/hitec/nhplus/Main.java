@@ -2,6 +2,7 @@ package de.hitec.nhplus;
 
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
 
+import de.hitec.nhplus.datastorage.CryptoUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,8 @@ public class Main extends Application {
     }
 
     public static void cryptoSetup() {
+        CryptoUtils.init();
+
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/CryptoSetupView.fxml"));
         Main.loadScene(loader, "NHPlus - Crypto Setup");
     }
