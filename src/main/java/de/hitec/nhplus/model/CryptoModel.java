@@ -1,12 +1,12 @@
 package de.hitec.nhplus.model;
 
-public class Crypto {
+public class CryptoModel {
     private final int id = 1;
     private boolean isDBEncrypted;
     private String testEncrypted;
 
 
-    public Crypto(boolean isDBEncrypted, String testEncrypted) {
+    public CryptoModel(boolean isDBEncrypted, String testEncrypted) {
         this.isDBEncrypted = isDBEncrypted;
         this.testEncrypted = testEncrypted;
     }
