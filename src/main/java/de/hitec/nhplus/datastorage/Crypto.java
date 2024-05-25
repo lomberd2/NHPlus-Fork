@@ -13,7 +13,8 @@ import java.util.Base64;
 
 public class Crypto {
     public final static String algorithm = "AES";
-    public static String currentKey = null;
+    protected static SecretKey key = null;
+    protected static String salt = "NHPlusSalt";
 
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -49,5 +50,18 @@ public class Crypto {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.DECRYPT_MODE, key);
         return (Serializable) sealedObject.getObject(cipher);
+    }
+
+    public static boolean login(String password) {
+        try {
+            key = getKeyFromPassword(password, salt);
+
+
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

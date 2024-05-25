@@ -87,7 +87,7 @@ public class SetUpDB {
 
     private static void setUpTableCrypto(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS crypto (" +
-                "   id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   id INTEGER PRIMARY KEY, " +
                 "   isDBEncrypted INTEGER NOT NULL DEFAULT 0, " +
                 "   testEncrypted TEXT" +
                 ");";
@@ -135,7 +135,7 @@ public class SetUpDB {
         try {
             Connection connection = ConnectionBuilder.getConnection();
             Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO crypto (isDBEncrypted, testEncrypted) VALUES (0, 'Test');");
+            statement.execute("INSERT INTO crypto (id, isDBEncrypted, testEncrypted) VALUES (1, 0, 'Test');");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
