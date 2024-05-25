@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="impl. get generic all tables from sqlite_master table">
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="zwischenstand">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +46,9 @@
     &quot;accountId&quot;: &quot;31625ba5-6da9-4210-a1e9-3989cf8f3c53&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -80,12 +86,15 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44712645",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "vcs.Git",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
       "sqlite"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "SQLite"
     ]
   }
 }]]></component>
@@ -96,6 +105,10 @@
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\java\de\hitec\nhplus\utils" />
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\java\de\hitec\nhplus\model" />
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\java\de\hitec\nhplus\datastorage" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="de.hitec.nhplus.utils.DbUtils" />
+      <recent name="de.hitec.nhplus.datastorage.CryptoUtils" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="de.hitec.nhplus.utils" />
@@ -176,7 +189,7 @@
       <workItem from="1715585425871" duration="5045000" />
       <workItem from="1715599608220" duration="2851000" />
       <workItem from="1716628313220" duration="76000" />
-      <workItem from="1716628524314" duration="7715000" />
+      <workItem from="1716628524314" duration="15169000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -306,18 +319,77 @@
       <option name="project" value="LOCAL" />
       <updated>1716635920577</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="added comments">
+      <option name="closed" value="true" />
+      <created>1716636614910</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1716636614910</updated>
+    </task>
+    <task id="LOCAL-00018" summary="refactored methods and moved to appropriate classes">
+      <option name="closed" value="true" />
+      <created>1716636974252</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1716636974252</updated>
+    </task>
+    <task id="LOCAL-00019" summary="removed unneeded comments and todos">
+      <option name="closed" value="true" />
+      <created>1716637579924</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716637579924</updated>
+    </task>
+    <task id="LOCAL-00020" summary="zwischenstand">
+      <option name="closed" value="true" />
+      <created>1716641407328</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716641407328</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="github/JblDbEncryption" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -336,6 +408,10 @@
     <MESSAGE value="refactored Crypto Methods" />
     <MESSAGE value="impl. setup db encryption logic" />
     <MESSAGE value="impl. get generic all tables from sqlite_master table" />
-    <option name="LAST_COMMIT_MESSAGE" value="impl. get generic all tables from sqlite_master table" />
+    <MESSAGE value="added comments" />
+    <MESSAGE value="refactored methods and moved to appropriate classes" />
+    <MESSAGE value="removed unneeded comments and todos" />
+    <MESSAGE value="zwischenstand" />
+    <option name="LAST_COMMIT_MESSAGE" value="zwischenstand" />
   </component>
 </project>

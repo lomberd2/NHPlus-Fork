@@ -14,6 +14,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 
 public class CryptoUtils {
@@ -93,20 +94,70 @@ public class CryptoUtils {
         Connection connection = ConnectionBuilder.getConnection();
 
         try {
+            // Generate the secret key from the password
             key = getKeyFromPassword(password);
 
-            // Unlock the database
-            connection.prepareStatement("PRAGMA key = '" + Base64.getEncoder().encodeToString(key.getEncoded()) + "'").executeUpdate();
+            // Retrieve the encrypted test string from the CryptoModel
+            String encryptedTestString = curCrypto.getTestEncrypted();
 
-            String decrypted = decrypt(curCrypto.getTestEncrypted());
+            // Decrypt the test string to verify if the provided password is correct
+            String decrypted = decrypt(encryptedTestString);
 
+            // Check if the decrypted string matches the expected value
             if (!decrypted.equals("Hello World!")) {
-                key = null;
-                throw new Exception("Login failed, db cannot be decrypted");
+                key = null; // Clear the key if the password is incorrect
+                throw new Exception("Login failed, DB cannot be decrypted");
+            }
+
+            // Decrypt and restore all tables
+            for (String table : getAllTablesForDecryption()) {
+                System.out.println("Decrypting table: " + table);
+
+                PreparedStatement selectStatement = connection.prepareStatement("SELECT id, encrypted_data FROM encrypted_" + table);
+                ResultSet resultSet = selectStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String encryptedData = resultSet.getString("encrypted_data");
+                    String decryptedData = decrypt(encryptedData);
+
+                    System.out.println("Decrypted data: " + decryptedData);
+
+                    // Assuming the decrypted data is a CSV string, split it into individual values
+                    String[] values = decryptedData.split(",");
+
+                    // Create the insert statement dynamically based on the column count
+                    StringBuilder insertQuery = new StringBuilder("INSERT INTO " + table + " VALUES (");
+                    for (int i = 0; i < values.length; i++) {
+                        insertQuery.append("?");
+                        if (i < values.length - 1) {
+                            insertQuery.append(", ");
+                        }
+                    }
+                    insertQuery.append(")");
+
+                    PreparedStatement insertStatement = connection.prepareStatement(insertQuery.toString());
+                    for (int i = 0; i < values.length; i++) {
+                        var curValue = values[i];
+
+                        // replace sanitized , values
+                        if (curValue.contains("[ÐæÑ]")) {
+                            curValue = curValue.replace("[ÐæÑ]", ",");
+                        }
+
+                        insertStatement.setString(i + 1, curValue);
+                    }
+
+                    insertStatement.executeUpdate();
+                }
+
+                // Optionally, drop the encrypted table after decryption
+                //connection.createStatement().execute("DROP TABLE encrypted_" + table);
             }
         } catch (Exception e) {
-            key = null;
-            throw new RuntimeException("Login failed, db cannot be decrypted");
+            e.printStackTrace();
+            key = null; // Clear the key in case of any exception
+            throw new RuntimeException("Login failed, DB cannot be decrypted", e);
         }
     }
 
@@ -124,56 +175,55 @@ public class CryptoUtils {
 
             cryptoDao.updateCryptoModel(curCrypto);
 
-            System.out.println( Arrays.toString(getAllTablesForEncryption()) );
+            System.out.println(Arrays.toString(getAllTablesForEncryption()));
 
             for (String table : getAllTablesForEncryption()) {
                 System.out.println("Encrypting table: " + table);
-                connection.createStatement().execute("CREATE TABLE encrypted_" + table + " (id INTEGER PRIMARY KEY, encrypted_data BLOB)");
+                connection.createStatement().execute("CREATE TABLE IF NOT EXISTS encrypted_" + table + " (id INTEGER PRIMARY KEY, encrypted_data BLOB)");
 
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM " + table );
-
-                var resultSet = preparedStatement.executeQuery();
+                PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM " + table);
+                ResultSet resultSet = selectStatement.executeQuery();
 
                 while (resultSet.next()) {
-                    // Temporarily store the row
-                    var row = new HashMap<String, String>();
+                    int id = resultSet.getInt(1);
+                    StringBuilder rowData = new StringBuilder();
 
-                    // Encrypt all columns
                     for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                        String column = resultSet.getMetaData().getColumnName(i);
+                        if (i > 1) rowData.append(",");
                         String value = resultSet.getString(i);
-                        String encryptedValue = encrypt(value);
 
-                        System.out.println("Column: " + column + " Value: " + value + " Encrypted: " + encryptedValue);
+                        // sanitize , values
+                        if (value.contains(",")) {
+                            value = value.replace(",", "[ÐæÑ]");
+                        }
 
-                        row.put(column, encryptedValue);
+                        rowData.append(value);
                     }
 
-                    // Update the row with the encrypted values
-                    String updateQuery = "UPDATE " + table + " SET ";
-
-                    for (var entry : row.entrySet()) {
-                        updateQuery += entry.getKey() + " = ?, ";
-                    }
-
-                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery.substring(0, updateQuery.length() - 2) + " WHERE id = " + resultSet.getInt("id"));
-
-
-                    updateStatement.executeUpdate();
-
+                    String encryptedData = encrypt(rowData.toString());
+                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO encrypted_" + table + " (id, encrypted_data) VALUES (?, ?)");
+                    insertStatement.setInt(1, id);
+                    insertStatement.setString(2, encryptedData);
+                    insertStatement.executeUpdate();
                 }
             }
 
-            // Dont save yet
-            //setDBEncrypted(true);
+            // Uncomment the next line to finalize the encryption process
+            setDBEncrypted(true);
         } catch (Exception e) {
             e.printStackTrace();
             key = null;
             System.err.println("DB encryption setup failed");
+        } finally {
+            // Delete values from the original tables after encryption
+            //for (String table : getAllTablesForEncryption()) {
+            //    connection.createStatement().execute("DELETE FROM " + table);
+            //}
         }
 
+
         // TODO remove on -release- just testing
-        throw new Exception("DB encryption setup failed");
+        //throw new Exception("DB encryption setup failed");
     }
 
     public static boolean isDBEncrypted() {
@@ -195,6 +245,14 @@ public class CryptoUtils {
         var tables = new ArrayList<String>();
 
         Collections.addAll(tables, Arrays.stream(DbUtils.getAllTables()).filter(s -> !s.equals("crypto") ).toArray(String[]::new));
+
+        return tables.toArray(new String[0]);
+    }
+
+    public static String[] getAllTablesForDecryption() {
+        var tables = new ArrayList<String>();
+
+        Collections.addAll(tables, Arrays.stream(getAllTablesForEncryption()).filter(s -> !s.startsWith("encrypted") ).toArray(String[]::new));
 
         return tables.toArray(new String[0]);
     }

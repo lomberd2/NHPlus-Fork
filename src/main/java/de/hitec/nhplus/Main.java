@@ -11,6 +11,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import static de.hitec.nhplus.datastorage.CryptoUtils.getAllTablesForEncryption;
 
 public class Main extends Application {
 
@@ -46,6 +49,19 @@ public class Main extends Application {
             Main.primaryStage.show();
 
             Main.primaryStage.setOnCloseRequest(event -> {
+                if (CryptoUtils.isDBEncrypted())
+                    for (String table : getAllTablesForEncryption()) {
+                        if (table.startsWith("sqlite_"))
+                            continue;
+                        if (table.startsWith("encrypted_"))
+                            continue;
+                        try {
+                            ConnectionBuilder.getConnection().createStatement().execute("DELETE FROM " + table);
+                        } catch (SQLException e) {
+                            System.out.println("Error: " + e.getMessage() + " - " + table);
+                        }
+                    }
+
                 ConnectionBuilder.closeConnection();
                 Platform.exit();
                 System.exit(0);
