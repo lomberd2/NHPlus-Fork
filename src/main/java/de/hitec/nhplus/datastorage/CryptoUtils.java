@@ -12,10 +12,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.*;
 
 public class CryptoUtils {
     private final static String algorithm = "AES";
@@ -90,9 +89,14 @@ public class CryptoUtils {
         return (Serializable) sealedObject.getObject(cipher);
     }
 
-    public static void login(String password) {
+    public static void login(String password) throws Exception  {
+        Connection connection = ConnectionBuilder.getConnection();
+
         try {
             key = getKeyFromPassword(password);
+
+            // Unlock the database
+            connection.prepareStatement("PRAGMA key = '" + Base64.getEncoder().encodeToString(key.getEncoded()) + "'").executeUpdate();
 
             String decrypted = decrypt(curCrypto.getTestEncrypted());
 
@@ -106,11 +110,12 @@ public class CryptoUtils {
         }
     }
 
-    public static void setupDBEncryption(String password) {
+    public static void setupDBEncryption(String password) throws Exception {
         if (isDBEncrypted()) {
             System.err.println("DB already encrypted");
             return;
         }
+        Connection connection = ConnectionBuilder.getConnection();
 
         try {
             key = getKeyFromPassword(password, salt);
@@ -121,14 +126,54 @@ public class CryptoUtils {
 
             System.out.println( Arrays.toString(getAllTablesForEncryption()) );
 
-            // TODO remove on -release- just testing
-            throw new RuntimeException("DB encryption setup failed");
+            for (String table : getAllTablesForEncryption()) {
+                System.out.println("Encrypting table: " + table);
+                connection.createStatement().execute("CREATE TABLE encrypted_" + table + " (id INTEGER PRIMARY KEY, encrypted_data BLOB)");
+
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM " + table );
+
+                var resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Temporarily store the row
+                    var row = new HashMap<String, String>();
+
+                    // Encrypt all columns
+                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+                        String column = resultSet.getMetaData().getColumnName(i);
+                        String value = resultSet.getString(i);
+                        String encryptedValue = encrypt(value);
+
+                        System.out.println("Column: " + column + " Value: " + value + " Encrypted: " + encryptedValue);
+
+                        row.put(column, encryptedValue);
+                    }
+
+                    // Update the row with the encrypted values
+                    String updateQuery = "UPDATE " + table + " SET ";
+
+                    for (var entry : row.entrySet()) {
+                        updateQuery += entry.getKey() + " = ?, ";
+                    }
+
+                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery.substring(0, updateQuery.length() - 2) + " WHERE id = " + resultSet.getInt("id"));
+
+
+                    updateStatement.executeUpdate();
+
+                }
+            }
+
             // Dont save yet
             //setDBEncrypted(true);
         } catch (Exception e) {
+            e.printStackTrace();
             key = null;
             System.err.println("DB encryption setup failed");
         }
+
+        // TODO remove on -release- just testing
+        throw new Exception("DB encryption setup failed");
     }
 
     public static boolean isDBEncrypted() {
