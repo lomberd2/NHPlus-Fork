@@ -19,6 +19,12 @@ public class DaoFactory {
         return DaoFactory.instance;
     }
 
+    /**
+     * This method retrieves all the table names from the database that are eligible for encryption.
+     * It filters out the 'crypto' table as it should not be encrypted.
+     *
+     * @return An array of table names that are eligible for encryption.
+     */
     public static String[] getAllTablesForEncryption() {
         var tables = new ArrayList<String>();
 
@@ -27,6 +33,13 @@ public class DaoFactory {
         return tables.toArray(new String[0]);
     }
 
+    /**
+     * This method retrieves all the table names from the database.
+     * It executes a SQL query to fetch all table names except 'sqlite_sequence'.
+     *
+     * @return An array of all table names in the database.
+     * @throws Exception If there is an error while executing the SQL query or processing the result.
+     */
     public String[] getAllTables() {
         PreparedStatement preparedStatement = null;
         ArrayList<String> tables = null;
