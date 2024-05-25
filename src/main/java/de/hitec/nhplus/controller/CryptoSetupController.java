@@ -9,8 +9,6 @@ import javafx.scene.control.PasswordField;
 
 public class CryptoSetupController {
 
-
-
     @FXML
     protected PasswordField passwordBox;
 
@@ -22,28 +20,20 @@ public class CryptoSetupController {
 
     @FXML
     protected void handleSubmitButton() {
-        System.out.println("Password: " + passwordBox.getText());
+        //System.out.println("Password: " + passwordBox.getText());
 
         try {
 
-            //System.out.println("Secret key: \n" + Arrays.toString(secretKey.getEncoded()));
-
-            //String testString = "Hello World!";
-            //var encrypted = Crypto.encrypt(testString, secretKey);
-
-            String encrypted = "eIfg6P6aBzzk5yQmJxgi3Q=="; // "Hello World!"
-            System.out.println(encrypted);
-
-            //var decrypted = Crypto.decrypt(encrypted, secretKey);
-
-            //System.out.println("Decrypted: " + decrypted);
+            if (CryptoUtils.isDBEncrypted()) {
+                CryptoUtils.login(passwordBox.getText());
+            } else {
+                CryptoUtils.setupDBEncryption(passwordBox.getText());
+            }
 
             Main.mainWindow();
         } catch (Exception e) {
-            e.printStackTrace();
-
+            System.err.println("Error: " + e.getMessage());
         }
-
 
     }
 

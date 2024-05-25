@@ -14,9 +14,9 @@ import java.security.spec.KeySpec;
 import java.util.Base64;
 
 public class CryptoUtils {
-    public final static String algorithm = "AES";
+    private final static String algorithm = "AES";
+    private final static String salt = "NHPlusSalt";
     protected static SecretKey key = null;
-    protected static String salt = "NHPlusSalt";
 
     protected static CryptoDao cryptoDao;
     protected static CryptoModel curCrypto;
@@ -30,10 +30,15 @@ public class CryptoUtils {
         curCrypto = cryptoDao.getCryptoModel();
     }
 
+
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 69420, 256);
         return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), algorithm);
+    }
+
+    public static String encrypt(String input) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        return encrypt(input, key);
     }
 
     public static String encrypt(String input, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -44,12 +49,20 @@ public class CryptoUtils {
         return Base64.getEncoder().encodeToString(cipherText);
     }
 
+    public static String decrypt(String cipherText) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        return decrypt(cipherText, key);
+    }
+
     public static String decrypt(String cipherText, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.DECRYPT_MODE, key);
         byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(cipherText));
         return new String(plainText);
+    }
+
+    public static SealedObject encryptObject(Serializable object) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException {
+        return encryptObject(object, key);
     }
 
     public static SealedObject encryptObject(Serializable object, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException {
@@ -59,6 +72,10 @@ public class CryptoUtils {
         return new SealedObject(object, cipher);
     }
 
+    public static Serializable decryptObject(SealedObject sealedObject) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException {
+        return decryptObject(sealedObject, key);
+    }
+
     public static Serializable decryptObject(SealedObject sealedObject, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -66,16 +83,38 @@ public class CryptoUtils {
         return (Serializable) sealedObject.getObject(cipher);
     }
 
-    public static boolean login(String password) {
+    public static void login(String password) {
         try {
             key = getKeyFromPassword(password, salt);
 
+            String decrypted = decrypt(curCrypto.getTestEncrypted());
 
-
-            return true;
+            if (!decrypted.equals("Hello World!")) {
+                key = null;
+                throw new Exception("Login failed, db cannot be decrypted");
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            key = null;
+            throw new RuntimeException("Login failed, db cannot be decrypted");
+        }
+    }
+
+    public static void setupDBEncryption(String password) {
+        if (isDBEncrypted()) {
+            System.err.println("DB already encrypted");
+            return;
+        }
+
+        try {
+            key = getKeyFromPassword(password, salt);
+
+            String encrypted = encrypt("Hello World!");
+
+            curCrypto.setTestEncrypted(encrypted);
+            setDBEncrypted(true);
+        } catch (Exception e) {
+            key = null;
+            System.err.println("DB encryption setup failed");
         }
     }
 
@@ -86,7 +125,10 @@ public class CryptoUtils {
     public static void setDBEncrypted(boolean isDBEncrypted) {
         curCrypto.setIsDBEncrypted(isDBEncrypted);
         cryptoDao.updateCryptoModel(curCrypto);
+    }
 
-        loadCryptoModel();
+    public static void setTestEncrypted(String testEncrypted) {
+        curCrypto.setTestEncrypted(testEncrypted);
+        cryptoDao.updateCryptoModel(curCrypto);
     }
 }
