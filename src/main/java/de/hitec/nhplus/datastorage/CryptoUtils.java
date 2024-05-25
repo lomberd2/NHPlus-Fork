@@ -11,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class CryptoUtils {
@@ -30,6 +31,9 @@ public class CryptoUtils {
         curCrypto = cryptoDao.getCryptoModel();
     }
 
+    public static SecretKey getKeyFromPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return getKeyFromPassword(password, salt);
+    }
 
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -85,7 +89,7 @@ public class CryptoUtils {
 
     public static void login(String password) {
         try {
-            key = getKeyFromPassword(password, salt);
+            key = getKeyFromPassword(password);
 
             String decrypted = decrypt(curCrypto.getTestEncrypted());
 
@@ -107,11 +111,17 @@ public class CryptoUtils {
 
         try {
             key = getKeyFromPassword(password, salt);
-
             String encrypted = encrypt("Hello World!");
-
             curCrypto.setTestEncrypted(encrypted);
-            setDBEncrypted(true);
+
+            cryptoDao.updateCryptoModel(curCrypto);
+
+            System.out.println( Arrays.toString(DaoFactory.getAllTablesForEncryption()) );
+
+            // TODO remove on -release- just testing
+            throw new RuntimeException("DB encryption setup failed");
+            // Dont save yet
+            //setDBEncrypted(true);
         } catch (Exception e) {
             key = null;
             System.err.println("DB encryption setup failed");
@@ -124,11 +134,6 @@ public class CryptoUtils {
 
     public static void setDBEncrypted(boolean isDBEncrypted) {
         curCrypto.setIsDBEncrypted(isDBEncrypted);
-        cryptoDao.updateCryptoModel(curCrypto);
-    }
-
-    public static void setTestEncrypted(String testEncrypted) {
-        curCrypto.setTestEncrypted(testEncrypted);
         cryptoDao.updateCryptoModel(curCrypto);
     }
 }
