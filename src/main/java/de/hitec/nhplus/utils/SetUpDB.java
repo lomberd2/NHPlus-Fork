@@ -31,8 +31,10 @@ public class SetUpDB {
         SetUpDB.wipeDb(connection);
         SetUpDB.setUpTablePatient(connection);
         SetUpDB.setUpTableTreatment(connection);
+        SetUpDB.setUpTableCrypto(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
+        SetUpDB.setUpCrypto();
     }
 
     /**
@@ -40,8 +42,9 @@ public class SetUpDB {
      */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE patient");
-            statement.execute("DROP TABLE treatment");
+            for (String table : DbUtils.getAllTables()) {
+                statement.execute("DROP TABLE IF EXISTS " + table);
+            }
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -55,7 +58,6 @@ public class SetUpDB {
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
                 "   roomnumber TEXT NOT NULL " +
-                // TODO - deleted assets TEXT not null
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -83,6 +85,19 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpTableCrypto(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS crypto (" +
+                "   id INTEGER PRIMARY KEY, " +
+                "   isDBEncrypted INTEGER NOT NULL DEFAULT 0, " +
+                "   testEncrypted TEXT" +
+                ");";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 
     private static void setUpPatients() {
         try {
@@ -111,6 +126,16 @@ public class SetUpDB {
             dao.create(new Treatment(14, 4, convertStringToLocalDate("2023-08-24"), convertStringToLocalTime("09:30"), convertStringToLocalTime("10:15"), "KG", "Lympfdrainage"));
             dao.create(new Treatment(16, 6, convertStringToLocalDate("2023-08-31"), convertStringToLocalTime("13:30"), convertStringToLocalTime("13:45"), "Toilettengang", "Hilfe beim Toilettengang; Patientin klagt über Schmerzen beim Stuhlgang. Gabe von Iberogast"));
             dao.create(new Treatment(17, 6, convertStringToLocalDate("2023-09-01"), convertStringToLocalTime("16:00"), convertStringToLocalTime("17:00"), "KG", "Massage der Extremitäten zur Verbesserung der Durchblutung"));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private static void setUpCrypto() {
+        try {
+            Connection connection = ConnectionBuilder.getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO crypto (id, isDBEncrypted, testEncrypted) VALUES (1, 0, 'Test');");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
