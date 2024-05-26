@@ -11,9 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
-import static de.hitec.nhplus.datastorage.CryptoUtils.getAllTablesForEncryption;
 
 public class Main extends Application {
 
@@ -23,7 +20,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
         //mainWindow();
-        cryptoSetup();
+        cryptoSetupLogin();
     }
 
     public static void mainWindow() {
@@ -31,11 +28,11 @@ public class Main extends Application {
         Main.loadScene(loader, "NHPlus");
     }
 
-    public static void cryptoSetup() {
+    public static void cryptoSetupLogin() {
         CryptoUtils.init();
 
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/CryptoSetupView.fxml"));
-        Main.loadScene(loader, "NHPlus - Crypto Setup");
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/CryptoLoginView.fxml"));
+        Main.loadScene(loader, "NHPlus - Crypto Setup / Login");
     }
 
     public static void loadScene(FXMLLoader loader, String title) {
