@@ -49,18 +49,7 @@ public class Main extends Application {
             Main.primaryStage.show();
 
             Main.primaryStage.setOnCloseRequest(event -> {
-                if (CryptoUtils.isDBEncrypted())
-                    for (String table : getAllTablesForEncryption()) {
-                        if (table.startsWith("sqlite_"))
-                            continue;
-                        if (table.startsWith("encrypted_"))
-                            continue;
-                        try {
-                            ConnectionBuilder.getConnection().createStatement().execute("DELETE FROM " + table);
-                        } catch (SQLException e) {
-                            System.out.println("Error: " + e.getMessage() + " - " + table);
-                        }
-                    }
+                CryptoUtils.logout();
 
                 ConnectionBuilder.closeConnection();
                 Platform.exit();
