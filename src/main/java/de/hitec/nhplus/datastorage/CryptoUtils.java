@@ -117,7 +117,7 @@ public class CryptoUtils {
             isLoggedIn = true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             key = null; // Clear the key in case of any exception
             throw new Exception("Login failed, DB cannot be decrypted");
         }
@@ -142,7 +142,7 @@ public class CryptoUtils {
             setDBEncrypted(true);
             isLoggedIn = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             key = null;
             System.err.println("DB encryption setup failed");
         }
@@ -194,7 +194,7 @@ public class CryptoUtils {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             key = null;
             System.err.println("DB encryption failed");
             return false;
@@ -258,7 +258,7 @@ public class CryptoUtils {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             key = null;
             System.err.println("DB decryption failed");
             return false;
@@ -277,7 +277,7 @@ public class CryptoUtils {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.err.println("Error: " + e.getMessage());
             return false;
         }
