@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="removed stacktraces">
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="fixed SetUpDB wipe all db method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" afterDir="false" />
@@ -114,7 +114,7 @@
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.SetUpDB">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.Main" />
       <module name="NHPlus" />
@@ -156,8 +156,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.SetUpDB" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.RefactorRemoveSensitiveDataFromDB" />
       </list>
     </recent_temporary>
@@ -191,7 +191,7 @@
       <workItem from="1716628313220" duration="76000" />
       <workItem from="1716628524314" duration="15435000" />
       <workItem from="1716718161152" duration="1974000" />
-      <workItem from="1716720785027" duration="1689000" />
+      <workItem from="1716720785027" duration="2735000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -377,7 +377,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716722076885</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="implemented proper errors">
+      <option name="closed" value="true" />
+      <created>1716722528693</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1716722528693</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fixed SetUpDB wipe all db method">
+      <option name="closed" value="true" />
+      <created>1716722709347</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1716722709347</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -442,6 +458,8 @@
     <MESSAGE value="implemented encryption, still todos left" />
     <MESSAGE value="renamed" />
     <MESSAGE value="removed stacktraces" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed stacktraces" />
+    <MESSAGE value="implemented proper errors" />
+    <MESSAGE value="fixed SetUpDB wipe all db method" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed SetUpDB wipe all db method" />
   </component>
 </project>

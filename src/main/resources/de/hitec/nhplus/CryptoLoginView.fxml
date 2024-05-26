@@ -10,13 +10,16 @@
          <children>
             <Label fx:id="labelTag" text="labelTag">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="5.0" />
                </VBox.margin></Label>
             <PasswordField fx:id="passwordBox">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin></PasswordField>
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" text="Submit Password" />
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" text="Submit Password">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></Button>
          </children>
       </VBox>
    </center>
