@@ -145,11 +145,6 @@ public class CryptoUtils {
             e.printStackTrace();
             key = null;
             System.err.println("DB encryption setup failed");
-        } finally {
-            // Delete values from the original tables after encryption
-            //for (String table : getAllTablesForEncryption()) {
-            //    connection.createStatement().execute("DELETE FROM " + table);
-            //}
         }
     }
 
