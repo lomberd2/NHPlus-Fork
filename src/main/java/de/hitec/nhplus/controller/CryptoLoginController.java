@@ -128,9 +128,9 @@ public class CryptoLoginController {
     public void initialize() {
         if (!CryptoUtils.isDBEncrypted()) {
             setupSetup();
-        } else {
-
-            setupLoginTexts();
+            return;
         }
+
+        setupLoginTexts();
     }
 }
