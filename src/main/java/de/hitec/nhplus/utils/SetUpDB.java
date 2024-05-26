@@ -42,9 +42,9 @@ public class SetUpDB {
      */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE patient");
-            statement.execute("DROP TABLE treatment");
-            statement.execute("DROP TABLE crypto");
+            for (String table : DbUtils.getAllTables()) {
+                statement.execute("DROP TABLE IF EXISTS " + table);
+            }
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
