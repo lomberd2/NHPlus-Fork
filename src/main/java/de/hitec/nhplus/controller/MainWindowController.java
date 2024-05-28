@@ -22,7 +22,17 @@ public class MainWindowController {
             exception.printStackTrace();
         }
     }
+    //handleShowAllCaregiver
 
+    @FXML
+    private void handleShowAllCaregiver(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/AllCaregiverView.fxml"));
+        try {
+            mainBorderPane.setCenter(loader.load());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
     @FXML
     private void handleShowAllTreatments(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/AllTreatmentView.fxml"));

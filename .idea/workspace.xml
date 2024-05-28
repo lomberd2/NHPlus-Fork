@@ -5,11 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="updated gitignore for IntelliJ">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllCaregiverController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CaregiverDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Caregiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +29,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -34,8 +49,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/szut-thiel/NHPlus&quot;,
-    &quot;accountId&quot;: &quot;31625ba5-6da9-4210-a1e9-3989cf8f3c53&quot;
+    &quot;url&quot;: &quot;https://github.com/lomberd2/NHPlus-Fork.git&quot;,
+    &quot;accountId&quot;: &quot;d8c0f6eb-497e-4cdd-bb26-b4fd231079ec&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -66,7 +81,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;PflegerModulJan&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/T.Thiel/Documents/23/FA23E/LF05/NHPlus/NHPlus/db/nursingHome.db&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -83,6 +99,9 @@
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
       &quot;sqlite&quot;
+    ],
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
+      &quot;SQLite&quot;
     ]
   }
 }</component>
@@ -95,6 +114,9 @@
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\java\de\hitec\nhplus\datastorage" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="de.hitec.nhplus.datastorage" />
+      <recent name="de.hitec.nhplus.model" />
+      <recent name="de.hitec.nhplus.controller" />
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
@@ -135,8 +157,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
       </set>
     </attachedChunks>
   </component>
@@ -155,6 +177,12 @@
       <workItem from="1714998970838" duration="774000" />
       <workItem from="1715064951629" duration="579000" />
       <workItem from="1715065577600" duration="94000" />
+      <workItem from="1715070168083" duration="328000" />
+      <workItem from="1715599984525" duration="3274000" />
+      <workItem from="1716810194172" duration="9587000" />
+      <workItem from="1716825651196" duration="432000" />
+      <workItem from="1716833060689" duration="1905000" />
+      <workItem from="1716882898578" duration="777000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -192,6 +220,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
           <line>217</line>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
