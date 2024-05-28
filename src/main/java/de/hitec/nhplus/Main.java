@@ -35,6 +35,11 @@ public class Main extends Application {
         Main.loadScene(loader, "NHPlus - Crypto Setup / Login");
     }
 
+    public static void showAdminUserCreation() {
+        FXMLLoader = new FXMLLoader(Main.class.getResource("de/hitec/nhplus/AdminUserCreationView.fxml"));
+        loadScene(loader, "NHPlus - Create Admin User");
+    }
+
     public static void loadScene(FXMLLoader loader, String title) {
         try {
             BorderPane pane = loader.load();
