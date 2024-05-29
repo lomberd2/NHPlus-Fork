@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="db nothing changed">
-      <change afterPath="$PROJECT_DIR$/src/main/tests/CryptoTestsJBL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,7 +112,7 @@
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CryptoTestsJBL">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.Main" />
       <module name="NHPlus" />
@@ -154,19 +148,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CryptoTestsJBL" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CryptoTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="NHPlus" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CryptoTestsJBL" />
+      <option name="MAIN_CLASS_NAME" value="CryptoTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CryptoTestsJBL.testCryptoFunctionality" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CryptoTests.testCryptoFunctionality" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="NHPlus" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CryptoTestsJBL" />
+      <option name="MAIN_CLASS_NAME" value="CryptoTests" />
       <option name="METHOD_NAME" value="testCryptoFunctionality" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -175,11 +169,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CryptoTestsJBL" />
-        <item itemvalue="JUnit.AssetTestByMo" />
-        <item itemvalue="JUnit.CryptoTestsJBL.testCryptoFunctionality" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.SetUpDB" />
+        <item itemvalue="JUnit.CryptoTestsJBL" />
+        <item itemvalue="JUnit.AssetTestByMo" />
+        <item itemvalue="JUnit.CryptoTests.testCryptoFunctionality" />
       </list>
     </recent_temporary>
   </component>
@@ -217,7 +211,7 @@
       <workItem from="1716804180640" duration="6841000" />
       <workItem from="1716817479750" duration="1575000" />
       <workItem from="1716822114856" duration="1032000" />
-      <workItem from="1716970238547" duration="1036000" />
+      <workItem from="1716970238547" duration="2028000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -451,7 +445,31 @@
       <option name="project" value="LOCAL" />
       <updated>1716724559749</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fixed tests error">
+      <option name="closed" value="true" />
+      <created>1716971382146</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1716971382146</updated>
+    </task>
+    <task id="LOCAL-00031" summary="implemented crypto tests">
+      <option name="closed" value="true" />
+      <created>1716971609227</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716971609227</updated>
+    </task>
+    <task id="LOCAL-00032" summary="added comments">
+      <option name="closed" value="true" />
+      <created>1716972171445</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716972171445</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +514,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated gitignore for IntelliJ" />
     <MESSAGE value="assets delete in patient.java" />
     <MESSAGE value="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view" />
     <MESSAGE value="implemented secret key generation based on Password input" />
@@ -508,7 +525,6 @@
     <MESSAGE value="refactored Crypto Methods" />
     <MESSAGE value="impl. setup db encryption logic" />
     <MESSAGE value="impl. get generic all tables from sqlite_master table" />
-    <MESSAGE value="added comments" />
     <MESSAGE value="refactored methods and moved to appropriate classes" />
     <MESSAGE value="removed unneeded comments and todos" />
     <MESSAGE value="zwischenstand" />
@@ -520,6 +536,9 @@
     <MESSAGE value="fixed SetUpDB wipe all db method" />
     <MESSAGE value="added disclaimers to Crypto Setup" />
     <MESSAGE value="db nothing changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="db nothing changed" />
+    <MESSAGE value="fixed tests error" />
+    <MESSAGE value="implemented crypto tests" />
+    <MESSAGE value="added comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="added comments" />
   </component>
 </project>
