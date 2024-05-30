@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DbUtils {
     /**
      * This method retrieves all the table names from the database.
-     * It executes a SQL query to fetch all table names except 'sqlite_sequence'.
+     * It executes a SQL query to fetch all table names except 'sqlite_sequence' and 'user'.
      *
      * @return An array of all table names in the database.
      * @throws Exception If there is an error while executing the SQL query or processing the result.
@@ -17,7 +17,7 @@ public class DbUtils {
         PreparedStatement preparedStatement = null;
         ArrayList<String> tables = null;
         try {
-            preparedStatement = ConnectionBuilder.getConnection().prepareStatement("SELECT tbl_name FROM sqlite_master WHERE tbl_name <> 'sqlite_sequence'");
+            preparedStatement = ConnectionBuilder.getConnection().prepareStatement("SELECT tbl_name FROM sqlite_master WHERE tbl_name <> 'sqlite_sequence' AND tbl_name <> 'user'");
             var resultSet = preparedStatement.executeQuery();
             tables = new ArrayList<String>();
             while (resultSet.next()) {

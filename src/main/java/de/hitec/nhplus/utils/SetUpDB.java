@@ -7,9 +7,11 @@ import de.hitec.nhplus.datastorage.TreatmentDao;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalDate;
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalTime;
@@ -32,9 +34,11 @@ public class SetUpDB {
         SetUpDB.setUpTablePatient(connection);
         SetUpDB.setUpTableTreatment(connection);
         SetUpDB.setUpTableCrypto(connection);
+        SetUpDB.setUpTableUser(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
         SetUpDB.setUpCrypto();
+        //SetUpDB.setUpUserForTesting();
     }
 
     /**
@@ -42,7 +46,13 @@ public class SetUpDB {
      */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
-            for (String table : DbUtils.getAllTables()) {
+            String[] tables = DbUtils.getAllTables();
+
+            // add 'user' to the list of tables to drop
+            tables = Arrays.copyOf(tables, tables.length + 1);
+            tables[tables.length - 1] = "user";
+
+            for (String table : tables) {
                 statement.execute("DROP TABLE IF EXISTS " + table);
             }
         } catch (SQLException exception) {
@@ -99,6 +109,23 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpTableUser(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS user (" +
+                "   id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   username TEXT NOT NULL, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   hashedMasterPwKey TEXT NOT NULL, " +
+                "   needsToChangePw INT NOT NULL DEFAULT TRUE" +
+                ");";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
     private static void setUpPatients() {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
@@ -139,6 +166,23 @@ public class SetUpDB {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    private static void setUpUserForTesting() {
+        try {
+            Connection connection = ConnectionBuilder.getConnection();
+            Statement statement = connection.createStatement();
+
+            // 5 mock users
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('admin', 'Admin', 'Admin', 'admin');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user1', 'User', 'One', 'user1');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user2', 'User', 'Two', 'user2');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user3', 'User', 'Three', 'user3');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user4', 'User', 'Four', 'user4');");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) {
