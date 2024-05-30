@@ -128,7 +128,7 @@ public class CryptoLoginController {
                 "<h1>Willkommen zu NHPlus!</h1>\n" +
                         "<p>Bitte beachten Sie die folgenden wichtigen Hinweise zur Sicherheit Ihres Kontos und Ihrer Daten.</p>\n" +
                         "<h2>INFO ZU IHREM ACCOUNT</h2>\n" +
-                        "<p>Master Account Name: ADMIN<br>Passwort: /\\<Welches Sie jetzt Festlegen\\></p>\n" +
+                        "<p>Master <b>Account Name</b>: <u>ADMIN</u><br>Passwort: <u>Welches Sie jetzt Festlegen</u></p>\n" +
                         "<h2>Wählen Sie ein sicheres Passwort</h2>\n" +
                         "<ul>\n" +
                         "    <li>Verwenden Sie ein starkes Passwort, das aus mindestens 12 Zeichen besteht und eine Kombination aus Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthält.</li>\n" +
