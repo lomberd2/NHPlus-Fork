@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added disclaimers to Crypto Setup">
-      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-    </list>
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,43 +56,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SetUpDB.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;JblDbEncryption&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/T.Thiel/Documents/23/FA23E/LF05/NHPlus/NHPlus/db/nursingHome.db&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.44712645&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.SetUpDB.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.AssetTestByMo.executor": "Run",
+    "JUnit.CryptoTestsJBL.executor": "Run",
+    "JUnit.CryptoTestsJBL.testCryptoFunctionality.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "JblDbEncryption",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/T.Thiel/Documents/23/FA23E/LF05/NHPlus/NHPlus/db/nursingHome.db",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.44712645",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;SQLite&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "SQLite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\resources\de\hitec\nhplus" />
@@ -125,19 +126,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RefactorRemoveSensitiveDataFromDB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.utils.RefactorRemoveSensitiveDataFromDB" />
-      <module name="NHPlus" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="de.hitec.nhplus.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SetUpDB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.utils.SetUpDB" />
       <module name="NHPlus" />
@@ -151,11 +139,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AssetTestByMo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="NHPlus" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="AssetTestByMo" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CryptoTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="NHPlus" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CryptoTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CryptoTests.testCryptoFunctionality" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="NHPlus" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CryptoTests" />
+      <option name="METHOD_NAME" value="testCryptoFunctionality" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.SetUpDB" />
-        <item itemvalue="Application.RefactorRemoveSensitiveDataFromDB" />
+        <item itemvalue="JUnit.CryptoTestsJBL" />
+        <item itemvalue="JUnit.AssetTestByMo" />
+        <item itemvalue="JUnit.CryptoTests.testCryptoFunctionality" />
       </list>
     </recent_temporary>
   </component>
@@ -189,6 +207,11 @@
       <workItem from="1716628524314" duration="15435000" />
       <workItem from="1716718161152" duration="1974000" />
       <workItem from="1716720785027" duration="2881000" />
+      <workItem from="1716798257459" duration="1183000" />
+      <workItem from="1716804180640" duration="6841000" />
+      <workItem from="1716817479750" duration="1575000" />
+      <workItem from="1716822114856" duration="1032000" />
+      <workItem from="1716970238547" duration="2028000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -398,7 +421,55 @@
       <option name="project" value="LOCAL" />
       <updated>1716723613425</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="db nothing changed">
+      <option name="closed" value="true" />
+      <created>1716724360249</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716724360249</updated>
+    </task>
+    <task id="LOCAL-00028" summary="db nothing changed">
+      <option name="closed" value="true" />
+      <created>1716724543959</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716724543959</updated>
+    </task>
+    <task id="LOCAL-00029" summary="db nothing changed">
+      <option name="closed" value="true" />
+      <created>1716724559749</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1716724559749</updated>
+    </task>
+    <task id="LOCAL-00030" summary="fixed tests error">
+      <option name="closed" value="true" />
+      <created>1716971382146</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1716971382146</updated>
+    </task>
+    <task id="LOCAL-00031" summary="implemented crypto tests">
+      <option name="closed" value="true" />
+      <created>1716971609227</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716971609227</updated>
+    </task>
+    <task id="LOCAL-00032" summary="added comments">
+      <option name="closed" value="true" />
+      <created>1716972171445</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716972171445</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -443,7 +514,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated gitignore for IntelliJ" />
     <MESSAGE value="assets delete in patient.java" />
     <MESSAGE value="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view" />
     <MESSAGE value="implemented secret key generation based on Password input" />
@@ -455,7 +525,6 @@
     <MESSAGE value="refactored Crypto Methods" />
     <MESSAGE value="impl. setup db encryption logic" />
     <MESSAGE value="impl. get generic all tables from sqlite_master table" />
-    <MESSAGE value="added comments" />
     <MESSAGE value="refactored methods and moved to appropriate classes" />
     <MESSAGE value="removed unneeded comments and todos" />
     <MESSAGE value="zwischenstand" />
@@ -466,6 +535,10 @@
     <MESSAGE value="implemented proper errors" />
     <MESSAGE value="fixed SetUpDB wipe all db method" />
     <MESSAGE value="added disclaimers to Crypto Setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="added disclaimers to Crypto Setup" />
+    <MESSAGE value="db nothing changed" />
+    <MESSAGE value="fixed tests error" />
+    <MESSAGE value="implemented crypto tests" />
+    <MESSAGE value="added comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="added comments" />
   </component>
 </project>

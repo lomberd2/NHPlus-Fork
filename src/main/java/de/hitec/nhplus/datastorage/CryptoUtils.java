@@ -28,11 +28,17 @@ public class CryptoUtils {
     protected static CryptoDao cryptoDao;
     protected static CryptoModel curCrypto;
 
+    /**
+     * Initializes the CryptoUtils by creating a CryptoDAO and loading the CryptoModel.
+     */
     public static void init() {
         cryptoDao = DaoFactory.getDaoFactory().createCryptoDAO();
         loadCryptoModel();
     }
 
+    /**
+     * Loads the CryptoModel from the CryptoDAO.
+     */
     private static void loadCryptoModel() {
         curCrypto = cryptoDao.getCryptoModel();
     }
@@ -41,6 +47,17 @@ public class CryptoUtils {
         return getKeyFromPassword(password, salt);
     }
 
+    /**
+     * This method generates a SecretKey from a given password and salt.
+     * It uses the PBKDF2WithHmacSHA256 algorithm to generate a key specification from the password and salt.
+     * The key specification is then used to generate a SecretKey.
+     *
+     * @param password The password to be used for generating the SecretKey.
+     * @param salt The salt to be used for generating the SecretKey.
+     * @return The generated SecretKey.
+     * @throws NoSuchAlgorithmException If the specified algorithm is not available.
+     * @throws InvalidKeySpecException If the specified key specification is inappropriate.
+     */
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 69420, 256);
@@ -51,6 +68,14 @@ public class CryptoUtils {
         return encrypt(input, key);
     }
 
+    /**
+     * Encrypts a given input string using a given SecretKey.
+     *
+     * @param input The string to be encrypted.
+     * @param key The SecretKey to be used for encryption.
+     * @return The encrypted string.
+     * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException If there is an error during encryption.
+     */
     public static String encrypt(String input, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -63,6 +88,14 @@ public class CryptoUtils {
         return decrypt(cipherText, key);
     }
 
+    /**
+     * Decrypts a given cipher text using a given SecretKey.
+     *
+     * @param cipherText The cipher text to be decrypted.
+     * @param key The SecretKey to be used for decryption.
+     * @return The decrypted string.
+     * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException If there is an error during decryption.
+     */
     public static String decrypt(String cipherText, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -75,6 +108,14 @@ public class CryptoUtils {
         return encryptObject(object, key);
     }
 
+    /**
+     * Encrypts a given Serializable object using a given SecretKey.
+     *
+     * @param object The Serializable object to be encrypted.
+     * @param key The SecretKey to be used for encryption.
+     * @return The encrypted object as a SealedObject.
+     * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException If there is an error during encryption.
+     */
     public static SealedObject encryptObject(Serializable object, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -86,6 +127,14 @@ public class CryptoUtils {
         return decryptObject(sealedObject, key);
     }
 
+    /**
+     * Decrypts a given SealedObject using a given SecretKey.
+     *
+     * @param sealedObject The SealedObject to be decrypted.
+     * @param key The SecretKey to be used for decryption.
+     * @return The decrypted object as a Serializable.
+     * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException If there is an error during decryption.
+     */
     public static Serializable decryptObject(SealedObject sealedObject, SecretKey key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -93,6 +142,13 @@ public class CryptoUtils {
         return (Serializable) sealedObject.getObject(cipher);
     }
 
+    /**
+     * Logs in the user by decrypting the test string with the provided password.
+     * If the decrypted string matches the expected value, the database is and can be decrypted.
+     *
+     * @param password The password provided by the user.
+     * @throws Exception If the login fails or the database cannot be decrypted.
+     */
     public static void login(String password) throws Exception {
         try {
             // Generate the secret key from the password
@@ -123,6 +179,13 @@ public class CryptoUtils {
         }
     }
 
+    /**
+     * Sets up the database encryption by encrypting the test string with the provided password.
+     * If the encryption is successful, the database is encrypted.
+     *
+     * @param password The password provided by the user.
+     * @throws Exception If the setup fails or the database cannot be encrypted.
+     */
     public static void setupDBEncryption(String password) throws Exception {
         if (isDBEncrypted()) {
             System.err.println("DB already encrypted");
@@ -148,11 +211,15 @@ public class CryptoUtils {
         }
     }
 
+    /**
+     * Encrypts the database by creating encrypted versions of all eligible tables and storing the encrypted data.
+     *
+     * @return true if the encryption is successful, false otherwise.
+     */
     public static boolean encryptDB() {
         Connection connection = ConnectionBuilder.getConnection();
 
         try {
-            //System.out.println(Arrays.toString(getAllTablesForEncryption()));
 
             for (String table : getAllTablesForEncryption()) {
                 if (table.startsWith("sqlite_"))
@@ -203,6 +270,11 @@ public class CryptoUtils {
         return true;
     }
 
+    /**
+     * Decrypts the database by decrypting the data in the encrypted tables and restoring it to the original tables.
+     *
+     * @return true if the decryption is successful, false otherwise.
+     */
     public static boolean decryptDB() {
         if (!isDBEncrypted()) {
             System.err.println("DB encryption not finalized");
@@ -267,6 +339,11 @@ public class CryptoUtils {
         return true;
     }
 
+    /**
+     * Clears all encrypted tables in the database.
+     *
+     * @return true if the operation is successful, false otherwise.
+     */
     public static boolean clearEncryptedTables() {
         Connection connection = ConnectionBuilder.getConnection();
 
@@ -285,6 +362,11 @@ public class CryptoUtils {
         return true;
     }
 
+    /**
+     * Logs out the user by encrypting the database and clearing the original tables.
+     *
+     * @return true if the logout is successful, false otherwise.
+     */
     public static boolean logout() {
         if (!CryptoUtils.isDBEncrypted())
             throw new IllegalStateException("Cannot logout while the DB encryption is not finalized");
@@ -316,10 +398,20 @@ public class CryptoUtils {
         return true;
     }
 
+    /**
+     * Checks if the database encryption is finalized.
+     *
+     * @return true if the database is encrypted, false otherwise.
+     */
     public static boolean isDBEncrypted() {
         return curCrypto.getIsDBEncrypted();
     }
 
+    /**
+     * Sets the database encryption status.
+     *
+     * @param isDBEncrypted The new status of the database encryption.
+     */
     public static void setDBEncrypted(boolean isDBEncrypted) {
         curCrypto.setIsDBEncrypted(isDBEncrypted);
         cryptoDao.updateCryptoModel(curCrypto);
@@ -339,6 +431,11 @@ public class CryptoUtils {
         return tables.toArray(new String[0]);
     }
 
+    /**
+     * Retrieves all the table names from the database that are eligible for decryption.
+     *
+     * @return An array of table names that are eligible for decryption.
+     */
     public static String[] getAllTablesForDecryption() {
         var tables = new ArrayList<String>();
 
