@@ -11,6 +11,7 @@ public class CryptoLoginController {
     @FXML
     protected VBox MainVBox;
 
+    private TextField usernameBox;
     @FXML
     protected PasswordField passwordBox;
 
@@ -34,10 +35,21 @@ public class CryptoLoginController {
             return;
         }
 
+        if (CryptoUtils.isDBEncrypted() && usernameBox.getText().isEmpty()) {
+            // Msg box for empty username
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Sie müssen einen Benutzernamen eingeben!");
+            alert.showAndWait();
+            return;
+        }
+
         try {
 
             if (CryptoUtils.isDBEncrypted()) {
-                CryptoUtils.login(passwordBox.getText());
+
+                CryptoUtils.loginAsUser( usernameBox.getText(), passwordBox.getText() );
             } else {
                 CryptoUtils.setupDBEncryption(passwordBox.getText());
             }
@@ -63,6 +75,15 @@ public class CryptoLoginController {
         TitleLabel.setText("NHPlus - Crypto Login");
         labelTag.setText("Bitte geben Sie Ihr Passwort ein:");
         submitButton.setText("Login");
+
+        // add username input field and label
+        usernameBox = new TextField();
+        usernameBox.setPromptText("Benutzername");
+
+        MainVBox.getChildren().add(0, usernameBox);
+        Label usernameLabel = new Label("Username:");
+        MainVBox.getChildren().add(0, usernameLabel);
+
     }
 
     protected void setupSetup() {

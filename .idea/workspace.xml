@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments">
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/ManageUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/UserCreationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/ManageUserView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/UserCreationView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AdminUserCreationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/SetupDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/DbUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/DbUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/views/AdminUserCreationView.fxml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +40,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="JblDbEncryption" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,6 +84,7 @@
     "JUnit.AssetTestByMo.executor": "Run",
     "JUnit.CryptoTestsJBL.executor": "Run",
     "JUnit.CryptoTestsJBL.testCryptoFunctionality.executor": "Run",
+    "OverrideImplement.generate.javadoc": "true",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -72,7 +92,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "JblDbEncryption",
+    "git-widget-placeholder": "LoginProtoyp",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/T.Thiel/Documents/23/FA23E/LF05/NHPlus/NHPlus/db/nursingHome.db",
     "node.js.detected.package.eslint": "true",
@@ -107,6 +127,9 @@
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="de.hitec.nhplus.utils.DbUtils" />
       <recent name="de.hitec.nhplus.datastorage.CryptoUtils" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jbl\IdeaProjects\NHPlus\src\main\resources\de\hitec\nhplus" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="de.hitec.nhplus.utils" />
@@ -171,7 +194,6 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.SetUpDB" />
-        <item itemvalue="JUnit.CryptoTestsJBL" />
         <item itemvalue="JUnit.AssetTestByMo" />
         <item itemvalue="JUnit.CryptoTests.testCryptoFunctionality" />
       </list>

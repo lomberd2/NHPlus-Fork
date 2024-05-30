@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hitec.nhplus.controller.ManageUserController">
+    <!-- Context Menu, Add and Close Buttons -->
+    <MenuBar>
+        <Menu text="User">
+            <MenuItem onAction="#handleCreateUser" text="Create New User" />
+            <MenuItem onAction="#handleClose" text="Close" />
+        </Menu>
+   </MenuBar>
+
+
+    <TableView fx:id="tableView" />
+
+    <Label text="Currently Selected User" />
+    <HBox fx:id="selectedUserBox" spacing="10">
+        <Label text="ID" />
+        <TextField fx:id="idField" disable="true" promptText="ID" />
+        <Button onAction="#handleEditUser" text="Edit User" />
+        <Button onAction="#handleDeleteUser" text="Delete/Disable User" />
+    </HBox>
+</VBox>

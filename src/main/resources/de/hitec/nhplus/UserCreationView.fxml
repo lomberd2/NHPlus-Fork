@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="de.hitec.nhplus.controller.UserCreationController">
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="Create New User" fx:id="titleLabel" />
+
+            <!-- Optional TextField ID if in edit mode -->
+            <Label text="ID" />
+            <TextField fx:id="idField" promptText="ID" disable="true" />
+
+            <Label text="Username" />
+            <TextField fx:id="usernameField" promptText="Username" />
+            <HBox alignment="CENTER" spacing="10">
+                <VBox>
+                    <Label text="First Name" />
+                    <TextField fx:id="firstnameField" promptText="First Name" />
+                </VBox>
+                <VBox>
+                    <Label text="Surname" />
+                    <TextField fx:id="surnameField" promptText="Surname" />
+                </VBox>
+            </HBox>
+
+            <CheckBox fx:id="shouldChangePassword" text="Change Password on next login" />
+
+            <Label text="Password" />
+            <PasswordField fx:id="passwordField" promptText="Initial Password" />
+            <Button onAction="#handleCreateUser" text="Create User" fx:id="submitButton" />
+        </VBox>
+    </center>
+</BorderPane>
