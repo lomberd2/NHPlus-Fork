@@ -120,7 +120,7 @@
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SetUpDB">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.Main" />
       <module name="NHPlus" />
@@ -177,8 +177,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SetUpDB" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.SetUpDB" />
         <item itemvalue="JUnit.AssetTestByMo" />
         <item itemvalue="JUnit.CryptoTests.testCryptoFunctionality" />
       </list>
