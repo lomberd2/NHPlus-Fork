@@ -18,6 +18,11 @@ public class MainWindowController {
     private User user;
 
     @FXML
+    private void initialize() {
+        checkForAdmin();
+    }
+
+    @FXML
     private void handleShowAllPatient(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/AllPatientView.fxml"));
         try {

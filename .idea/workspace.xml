@@ -4,25 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments">
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/ManageUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/UserCreationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/ManageUserView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/UserCreationView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/config.properties" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="updated text">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AdminUserCreationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/CryptoLoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/SetupDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/DbUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/DbUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/views/AdminUserCreationView.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +89,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44712645",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -135,7 +120,7 @@
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.SetUpDB">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.Main" />
       <module name="NHPlus" />
@@ -192,8 +177,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.SetUpDB" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.AssetTestByMo" />
         <item itemvalue="JUnit.CryptoTests.testCryptoFunctionality" />
       </list>
@@ -491,7 +476,55 @@
       <option name="project" value="LOCAL" />
       <updated>1716972171445</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="finished implementing user login, needs cleanup">
+      <option name="closed" value="true" />
+      <created>1717096769935</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1717096769935</updated>
+    </task>
+    <task id="LOCAL-00034" summary="reset db">
+      <option name="closed" value="true" />
+      <created>1717096791387</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1717096791387</updated>
+    </task>
+    <task id="LOCAL-00035" summary="changed title">
+      <option name="closed" value="true" />
+      <created>1717097412732</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1717097412732</updated>
+    </task>
+    <task id="LOCAL-00036" summary="added username box clear">
+      <option name="closed" value="true" />
+      <created>1717097500942</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1717097500942</updated>
+    </task>
+    <task id="LOCAL-00037" summary="updated dependencies &amp; added web">
+      <option name="closed" value="true" />
+      <created>1717099161455</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1717099161455</updated>
+    </task>
+    <task id="LOCAL-00038" summary="updated text">
+      <option name="closed" value="true" />
+      <created>1717099282079</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1717099282079</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -536,12 +569,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="assets delete in patient.java" />
-    <MESSAGE value="added crypto class, removed a comment from mo, modified Main for multi window handling, added simple crpyto setup fxml view" />
-    <MESSAGE value="implemented secret key generation based on Password input" />
-    <MESSAGE value="extended View &amp; Crypto class" />
-    <MESSAGE value="added crypto AES Algo and tested it" />
-    <MESSAGE value="optimized imports" />
     <MESSAGE value="added crypto table" />
     <MESSAGE value="added crypto table &amp; dao" />
     <MESSAGE value="refactored Crypto Methods" />
@@ -561,6 +588,12 @@
     <MESSAGE value="fixed tests error" />
     <MESSAGE value="implemented crypto tests" />
     <MESSAGE value="added comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="added comments" />
+    <MESSAGE value="finished implementing user login, needs cleanup" />
+    <MESSAGE value="reset db" />
+    <MESSAGE value="changed title" />
+    <MESSAGE value="added username box clear" />
+    <MESSAGE value="updated dependencies &amp; added web" />
+    <MESSAGE value="updated text" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated text" />
   </component>
 </project>
