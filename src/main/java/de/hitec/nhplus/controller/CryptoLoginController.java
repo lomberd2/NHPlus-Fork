@@ -3,8 +3,11 @@ package de.hitec.nhplus.controller;
 import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.CryptoUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
+import javafx.scene.web.WebView;
 
 public class CryptoLoginController {
 
@@ -49,7 +52,7 @@ public class CryptoLoginController {
 
             if (CryptoUtils.isDBEncrypted()) {
 
-                CryptoUtils.loginAsUser( usernameBox.getText(), passwordBox.getText() );
+                CryptoUtils.loginAsUser(usernameBox.getText(), passwordBox.getText());
             } else {
                 CryptoUtils.setupDBEncryption(passwordBox.getText());
             }
@@ -97,6 +100,8 @@ public class CryptoLoginController {
          *
          * Herzlich Willkommen zu unserer Anwendung! Bitte beachten Sie die folgenden wichtigen Hinweise zur Sicherheit Ihres Kontos und Ihrer Daten.
          *
+         * "INFO ZU IHREM ACCOUNT\n\nMaster Account Name: ADMIN\nPasswort: <Welches Sie jetzt Festlegen>\n\n" +
+         *
          * Wählen Sie ein sicheres Passwort
          *
          *     Verwenden Sie ein starkes Passwort, das aus mindestens 12 Zeichen besteht und eine Kombination aus Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthält.
@@ -118,25 +123,28 @@ public class CryptoLoginController {
          * Vielen Dank für Ihr Verständnis und Ihre Kooperation.
          */
 
-        TextArea disclaimerArea = new TextArea();
-        disclaimerArea.setText("Login / Setup Information\n\n" +
-                "Herzlich Willkommen zu unserer Anwendung! Bitte beachten Sie die folgenden wichtigen Hinweise zur Sicherheit Ihres Kontos und Ihrer Daten.\n\n" +
-                "Wählen Sie ein sicheres Passwort\n\n" +
-                "•   Verwenden Sie ein starkes Passwort, das aus mindestens 12 Zeichen besteht und eine Kombination aus Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthält.\n" +
-                "•   Vermeiden Sie leicht zu erratende Passwörter wie \"123456\", \"Passwort\" oder persönliche Informationen wie Ihren Namen oder Ihr Geburtsdatum.\n\n" +
-                "Bewahren Sie Ihr Passwort sicher auf\n\n" +
-                "•   Speichern Sie Ihr Passwort an einem sicheren Ort. Nutzen Sie am besten einen Passwort-Manager, um Ihre Zugangsdaten sicher zu verwalten.\n" +
-                "•   Teilen Sie Ihr Passwort niemals mit anderen Personen und geben Sie es nicht auf unsicheren Webseiten ein.\n\n" +
-                "Wichtiger Hinweis\n\n" +
-                "Bitte beachten Sie: Ihr Passwort ist der Schlüssel zu Ihren Daten. Aus Sicherheitsgründen haben wir keinen Zugriff auf Ihr Passwort und können es auch nicht wiederherstellen. Wenn Sie Ihr Passwort verlieren, haben Sie keine Möglichkeit mehr, auf Ihre Daten zuzugreifen.\n\n" +
-                "Bestätigen und Fortfahren\n\n" +
-                "Durch das Fortfahren bestätigen Sie, dass Sie die oben genannten Sicherheitsrichtlinien verstanden und akzeptiert haben. Schützen Sie Ihr Konto und Ihre Daten, indem Sie ein starkes Passwort wählen und sicher aufbewahren.\n\n" +
-                "Vielen Dank für Ihr Verständnis und Ihre Kooperation."
+        WebView disclaimerArea = new WebView();
+        disclaimerArea.getEngine().loadContent(
+                "<h1>Willkommen zu NHPlus!</h1>\n" +
+                        "<p>Bitte beachten Sie die folgenden wichtigen Hinweise zur Sicherheit Ihres Kontos und Ihrer Daten.</p>\n" +
+                        "<h2>INFO ZU IHREM ACCOUNT</h2>\n" +
+                        "<p>Master Account Name: ADMIN<br>Passwort: /\\<Welches Sie jetzt Festlegen\\></p>\n" +
+                        "<h2>Wählen Sie ein sicheres Passwort</h2>\n" +
+                        "<ul>\n" +
+                        "    <li>Verwenden Sie ein starkes Passwort, das aus mindestens 12 Zeichen besteht und eine Kombination aus Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthält.</li>\n" +
+                        "    <li>Vermeiden Sie leicht zu erratende Passwörter wie \"123456\", \"Passwort\" oder persönliche Informationen wie Ihren Namen oder Ihr Geburtsdatum.</li>\n" +
+                        "</ul>\n" +
+                        "<h2>Bewahren Sie Ihr Passwort sicher auf</h2>\n" +
+                        "<ul>\n" +
+                        "    <li>Speichern Sie Ihr Passwort an einem sicheren Ort. Nutzen Sie am besten einen Passwort-Manager, um Ihre Zugangsdaten sicher zu verwalten.</li>\n" +
+                        "    <li>Teilen Sie Ihr Passwort niemals mit anderen Personen und geben Sie es nicht auf unsicheren Webseiten ein.</li>\n" +
+                        "</ul>\n" +
+                        "<h2>Wichtiger Hinweis</h2>\n" +
+                        "<p>Bitte beachten Sie: Ihr Passwort ist der Schlüssel zu Ihren Daten. Aus Sicherheitsgründen haben wir keinen Zugriff auf Ihr Passwort und können es auch nicht wiederherstellen. Wenn Sie Ihr Passwort verlieren, haben Sie keine Möglichkeit mehr, auf Ihre Daten zuzugreifen.</p>\n" +
+                        "<h2>Bestätigen und Fortfahren</h2>\n" +
+                        "<p>Durch das Fortfahren bestätigen Sie, dass Sie die oben genannten Sicherheitsrichtlinien verstanden und akzeptiert haben. Schützen Sie Ihr Konto und Ihre Daten, indem Sie ein starkes Passwort wählen und sicher aufbewahren.</p>\n" +
+                        "<p>Vielen Dank für Ihr Verständnis und Ihre Kooperation.</p>"
         );
-        disclaimerArea.setEditable(false);
-        disclaimerArea.setWrapText(true);
-        disclaimerArea.setPrefHeight(400);
-        disclaimerArea.setPrefWidth(400);
 
         // Add disclaimer to MainVBox at index 1
         MainVBox.getChildren().add(0, disclaimerArea);
