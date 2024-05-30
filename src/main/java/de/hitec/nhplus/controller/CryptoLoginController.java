@@ -67,6 +67,9 @@ public class CryptoLoginController {
 
             // Clear password field
             passwordBox.clear();
+
+            if (usernameBox != null)
+                usernameBox.clear();
         }
 
     }
