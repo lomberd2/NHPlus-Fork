@@ -38,7 +38,13 @@ public class Main extends Application {
         CryptoUtils.init();
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/CryptoLoginView.fxml"));
-        Main.loadScene(loader, "NHPlus - Crypto Setup / Login");
+
+        String title = "NHPlus - Crypto Setup";
+        if (CryptoUtils.isDBEncrypted()) {
+            title = "NHPlus - Login";
+        }
+
+        Main.loadScene(loader, title);
     }
 
     public static void showAdminUserCreation() {
