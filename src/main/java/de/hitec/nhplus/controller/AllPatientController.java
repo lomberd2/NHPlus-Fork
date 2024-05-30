@@ -1,7 +1,10 @@
 package de.hitec.nhplus.controller;
 
+import de.hitec.nhplus.datastorage.ArchivedPatientDao;
+import de.hitec.nhplus.datastorage.ArchivedTreatmentDao;
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
+import de.hitec.nhplus.model.Treatment;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -210,14 +213,18 @@ public class AllPatientController {
      */
     @FXML
     public void handleDelete() {
-        Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            try {
-                DaoFactory.getDaoFactory().createPatientDAO().deleteById(selectedItem.getPid());
-                this.tableView.getItems().remove(selectedItem);
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
+        int index = this.tableView.getSelectionModel().getSelectedIndex();
+        Patient patient = this.patients.remove(index);
+        archivePatient(patient);
+    }
+
+    private void archivePatient(Patient patient) {
+        ArchivedPatientDao archivedPatientDao = DaoFactory.getDaoFactory().createArchivedPatientDao();
+        try {
+            archivedPatientDao.insert(patient);
+            dao.deleteById(patient.getPid());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 

@@ -25,4 +25,7 @@ public class DaoFactory {
     public CryptoDao createCryptoDAO() {
         return new CryptoDao(ConnectionBuilder.getConnection());
     }
+    public ArchivedTreatmentDao createArchivedTreatmentDao() {return new ArchivedTreatmentDao(ConnectionBuilder.getConnection());}
+
+    public ArchivedPatientDao createArchivedPatientDao() {return new ArchivedPatientDao();}
 }
