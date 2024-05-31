@@ -389,7 +389,7 @@ public class CryptoUtils {
 
         // Check if user "needs to change password" and update if necessary
         if (user.getNeedsToChangePw()) {
-            setUserHasToSetPassword(user);
+            disableUserHasToChangePw(user);
             user.setNeedsToChangePw(false);
         }
         return true;
@@ -565,6 +565,18 @@ public class CryptoUtils {
         return true;
     }
 
+    /**
+     * Updates the details of a user in the database.
+     * The method checks if the user is logged in and if the database is encrypted.
+     * If these conditions are met, it updates the user's username, firstname, surname, password, and the flag indicating if the user needs to change their password.
+     *
+     * @param user The User object to be updated.
+     * @param username The new username for the user.
+     * @param firstname The new firstname for the user.
+     * @param surname The new surname for the user.
+     * @param password The new password for the user.
+     * @param needsToChangePw The flag indicating if the user needs to change their password.
+     */
     public static void updateUser(User user, String username, String firstname, String surname, String password, boolean needsToChangePw) {
         if (!isLoggedIn || !isDBEncrypted())
             return;
@@ -653,7 +665,13 @@ public class CryptoUtils {
         }
     }
 
-    private static void setUserHasToSetPassword(User user) {
+    /**
+     * Disables the 'needsToChangePw' flag for a user in the database.
+     * This method is used to indicate that a user no longer needs to change their password at their next login.
+     *
+     * @param user The User object whose 'needsToChangePw' flag is to be updated.
+     */
+    private static void disableUserHasToChangePw(User user) {
         Connection connection = ConnectionBuilder.getConnection();
         user.setNeedsToChangePw(false);
 

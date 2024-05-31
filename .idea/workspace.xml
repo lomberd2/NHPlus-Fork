@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="implemented edit user and force change pw on login">
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added javadoc">
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +219,7 @@
       <workItem from="1716822114856" duration="1032000" />
       <workItem from="1716970238547" duration="2028000" />
       <workItem from="1717155582971" duration="552000" />
-      <workItem from="1717162876727" duration="10421000" />
+      <workItem from="1717162876727" duration="10588000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -565,7 +565,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717172872229</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="added javadoc">
+      <option name="closed" value="true" />
+      <created>1717173355890</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1717173355890</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +618,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactored methods and moved to appropriate classes" />
     <MESSAGE value="removed unneeded comments and todos" />
     <MESSAGE value="zwischenstand" />
     <MESSAGE value="implemented decription, still todos left" />
@@ -635,6 +642,7 @@
     <MESSAGE value="removed unused and added comments / javadocs" />
     <MESSAGE value="added comments / javadocs and refactored &quot;has user&quot;" />
     <MESSAGE value="implemented edit user and force change pw on login" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented edit user and force change pw on login" />
+    <MESSAGE value="added javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="added javadoc" />
   </component>
 </project>
