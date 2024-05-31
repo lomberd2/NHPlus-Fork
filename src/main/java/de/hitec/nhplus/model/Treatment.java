@@ -83,11 +83,11 @@ public class Treatment {
     }
 
     public void setBegin(String begin) {
-        this.begin = DateConverter.convertStringToLocalTime(begin);;
+        this.begin = DateConverter.convertStringToLocalTime(begin);
     }
 
     public void setEnd(String end) {
-        this.end = DateConverter.convertStringToLocalTime(end);;
+        this.end = DateConverter.convertStringToLocalTime(end);
     }
 
     public String getDescription() {
