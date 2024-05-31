@@ -2,6 +2,7 @@ package de.hitec.nhplus.controller;
 
 import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
+import de.hitec.nhplus.datastorage.CryptoUtils;
 import de.hitec.nhplus.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -97,6 +98,11 @@ public class ManageUserController {
 
     @FXML
     private void handleDeleteUser() {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+        if (selectedUser == null)
+            return;
+
+        CryptoUtils.deleteUser(selectedUser);
     }
 
     @FXML
