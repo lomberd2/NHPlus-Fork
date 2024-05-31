@@ -17,7 +17,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collections;
 
 public class CryptoUtils {
     private final static String algorithm = "AES";
@@ -267,7 +270,7 @@ public class CryptoUtils {
      * Logs in as a specific user by decrypting the test string with the provided password.
      * If the decrypted string matches the expected value, the database is decrypted.
      *
-     * @param user The username of the user.
+     * @param user     The username of the user.
      * @param password The password provided by the user.
      * @throws IllegalStateException If the login fails or the database cannot be decrypted.
      */
@@ -317,7 +320,7 @@ public class CryptoUtils {
     /**
      * Creates a new user with the provided password.
      *
-     * @param newUser The new User object to be created.
+     * @param newUser  The new User object to be created.
      * @param password The password for the new user.
      * @return The created User object.
      */
@@ -336,11 +339,9 @@ public class CryptoUtils {
 
             // Get User From DB
             Connection connection = ConnectionBuilder.getConnection();
-            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
-            selectStatement.setString(1, newUser.getUsername());
-            ResultSet resultSet = selectStatement.executeQuery();
 
-            if (resultSet.next()) {
+            // check if user exists
+            if (hasUser(connection, newUser)) {
                 System.err.println("User already exists");
                 return null;
             }
@@ -362,11 +363,70 @@ public class CryptoUtils {
         }
     }
 
+    /**
+     * Deletes a user from the database.
+     *
+     * @param userToDelete The user to be deleted.
+     * @return true if the user is successfully deleted, false otherwise.
+     */
+    public static boolean deleteUser(User userToDelete) {
+        if (!isLoggedIn || !isDBEncrypted())
+            return false;
+
+        // Current must be the master user
+        if (currentUser == null || !currentUser.getUsername().equals("admin"))
+            return false;
+
+        try {
+            // check if user exists
+            Connection connection = ConnectionBuilder.getConnection();
+
+            if (!hasUser(connection, userToDelete)) {
+                System.err.println("User not found");
+                return false;
+            }
+
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM user WHERE username = ?");
+            deleteStatement.setString(1, userToDelete.getUsername());
+            deleteStatement.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a user exists in the database.
+     *
+     * @param connection The database connection.
+     * @param user The user to be checked.
+     * @return true if the user exists, false otherwise.
+     */
+    public static boolean hasUser(Connection connection, User user) {
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+            selectStatement.setString(1, user.getUsername());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Sets a new password for a user.
      *
-     * @param user The user who wants to change their password.
+     * @param user        The user who wants to change their password.
      * @param oldPassword The old password of the user.
      * @param newPassword The new password of the user.
      * @return A string message indicating the result of the operation.
