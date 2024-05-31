@@ -263,6 +263,14 @@ public class CryptoUtils {
         }
     }
 
+    /**
+     * Logs in as a specific user by decrypting the test string with the provided password.
+     * If the decrypted string matches the expected value, the database is decrypted.
+     *
+     * @param user The username of the user.
+     * @param password The password provided by the user.
+     * @throws IllegalStateException If the login fails or the database cannot be decrypted.
+     */
     public static void loginAsUser(String user, String password) {
         if (isLoggedIn || !isDBEncrypted())
             return;
@@ -297,11 +305,22 @@ public class CryptoUtils {
 
     }
 
+    /**
+     * Returns the current logged-in user.
+     *
+     * @return The current User object.
+     */
     public static User getCurrentUser() {
         return currentUser;
     }
 
-
+    /**
+     * Creates a new user with the provided password.
+     *
+     * @param newUser The new User object to be created.
+     * @param password The password for the new user.
+     * @return The created User object.
+     */
     public static User createNewUser(User newUser, String password) {
         if (!isLoggedIn || !isDBEncrypted())
             return null;
@@ -343,6 +362,15 @@ public class CryptoUtils {
         }
     }
 
+
+    /**
+     * Sets a new password for a user.
+     *
+     * @param user The user who wants to change their password.
+     * @param oldPassword The old password of the user.
+     * @param newPassword The new password of the user.
+     * @return A string message indicating the result of the operation.
+     */
     public static String setNewPassword(User user, String oldPassword, String newPassword) {
         if (!isLoggedIn || !isDBEncrypted())
             return "Login required";
@@ -617,27 +645,4 @@ public class CryptoUtils {
         return tables.toArray(new String[0]);
     }
 
-    /**
-     * Generates a random salt for password hashing.
-     * The salt is a byte array of 16 bytes.
-     *
-     * @return The generated salt.
-     */
-    public static byte[] generateSalt() {
-        byte[] salt = new byte[16];
-        new Random().nextBytes(salt);
-        return salt;
-    }
-
-    public static String hashPassword(String password) {
-        String hashedPassword = null;
-
-        try {
-            hashedPassword = encrypt(password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return hashedPassword;
-    }
 }
