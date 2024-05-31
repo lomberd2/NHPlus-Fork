@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added comments / javadocs and refactored &quot;has user&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/UserCreationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/UserCreationController.java" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="implemented edit user and force change pw on login">
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CryptoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +219,7 @@
       <workItem from="1716822114856" duration="1032000" />
       <workItem from="1716970238547" duration="2028000" />
       <workItem from="1717155582971" duration="552000" />
-      <workItem from="1717162876727" duration="9799000" />
+      <workItem from="1717162876727" duration="10421000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -562,7 +557,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717164388218</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="implemented edit user and force change pw on login">
+      <option name="closed" value="true" />
+      <created>1717172872229</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1717172872229</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +610,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="impl. get generic all tables from sqlite_master table" />
     <MESSAGE value="refactored methods and moved to appropriate classes" />
     <MESSAGE value="removed unneeded comments and todos" />
     <MESSAGE value="zwischenstand" />
@@ -632,6 +634,7 @@
     <MESSAGE value="removed unused, formated and optimized imports" />
     <MESSAGE value="removed unused and added comments / javadocs" />
     <MESSAGE value="added comments / javadocs and refactored &quot;has user&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="added comments / javadocs and refactored &quot;has user&quot;" />
+    <MESSAGE value="implemented edit user and force change pw on login" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented edit user and force change pw on login" />
   </component>
 </project>

@@ -316,6 +316,15 @@ public class CryptoUtils {
 
     }
 
+    /**
+     * This method prompts the user to change their password.
+     * It checks if the user exists and if the database is encrypted.
+     * If these conditions are met, it shows a dialog for the user to enter a new password.
+     *
+     * @param user The user who needs to change their password.
+     * @param masterPw The master password of the db.
+     * @return true if the operation is successful, false otherwise.
+     */
     public static boolean promptToChangePassword(User user, String masterPw) {
         Connection connection = ConnectionBuilder.getConnection();
         if (!hasUser(connection, user) || !isDBEncrypted()) {
