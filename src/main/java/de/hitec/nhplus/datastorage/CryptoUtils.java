@@ -1,13 +1,13 @@
 package de.hitec.nhplus.datastorage;
 
 import de.hitec.nhplus.model.CryptoModel;
+import de.hitec.nhplus.model.User;
 import de.hitec.nhplus.utils.DbUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -20,10 +20,11 @@ import java.util.*;
 
 public class CryptoUtils {
     private final static String algorithm = "AES";
-    private final static String salt = "NHPlusSalt";
+    private final static String salt = "NHPlus";
     protected static SecretKey key = null;
 
     private static boolean isLoggedIn = false;
+    private static User currentUser = null;
 
     protected static CryptoDao cryptoDao;
     protected static CryptoModel curCrypto;
@@ -53,14 +54,31 @@ public class CryptoUtils {
      * The key specification is then used to generate a SecretKey.
      *
      * @param password The password to be used for generating the SecretKey.
-     * @param salt The salt to be used for generating the SecretKey.
+     * @param salt     The salt to be used for generating the SecretKey.
      * @return The generated SecretKey.
      * @throws NoSuchAlgorithmException If the specified algorithm is not available.
-     * @throws InvalidKeySpecException If the specified key specification is inappropriate.
+     * @throws InvalidKeySpecException  If the specified key specification is inappropriate.
      */
     public static SecretKey getKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 69420, 256);
+        return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), algorithm);
+    }
+
+    /**
+     * This method generates a SecretKey from a given password and salt.
+     * It uses the PBKDF2WithHmacSHA256 algorithm to generate a key specification from the password and salt.
+     * The key specification is then used to generate a SecretKey.
+     *
+     * @param password The password to be used for generating the SecretKey.
+     * @param salt     The salt to be used for generating the SecretKey.
+     * @return The generated SecretKey.
+     * @throws NoSuchAlgorithmException If the specified algorithm is not available.
+     * @throws InvalidKeySpecException  If the specified key specification is inappropriate.
+     */
+    public static SecretKey getKeyFromPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 69420, 256);
         return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), algorithm);
     }
 
@@ -72,7 +90,7 @@ public class CryptoUtils {
      * Encrypts a given input string using a given SecretKey.
      *
      * @param input The string to be encrypted.
-     * @param key The SecretKey to be used for encryption.
+     * @param key   The SecretKey to be used for encryption.
      * @return The encrypted string.
      * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException If there is an error during encryption.
      */
@@ -92,7 +110,7 @@ public class CryptoUtils {
      * Decrypts a given cipher text using a given SecretKey.
      *
      * @param cipherText The cipher text to be decrypted.
-     * @param key The SecretKey to be used for decryption.
+     * @param key        The SecretKey to be used for decryption.
      * @return The decrypted string.
      * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException If there is an error during decryption.
      */
@@ -112,7 +130,7 @@ public class CryptoUtils {
      * Encrypts a given Serializable object using a given SecretKey.
      *
      * @param object The Serializable object to be encrypted.
-     * @param key The SecretKey to be used for encryption.
+     * @param key    The SecretKey to be used for encryption.
      * @return The encrypted object as a SealedObject.
      * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException If there is an error during encryption.
      */
@@ -131,7 +149,7 @@ public class CryptoUtils {
      * Decrypts a given SealedObject using a given SecretKey.
      *
      * @param sealedObject The SealedObject to be decrypted.
-     * @param key The SecretKey to be used for decryption.
+     * @param key          The SecretKey to be used for decryption.
      * @return The decrypted object as a Serializable.
      * @throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException If there is an error during decryption.
      */
@@ -193,21 +211,185 @@ public class CryptoUtils {
         }
 
         try {
+            // Generate the secret key from the password
             key = getKeyFromPassword(password, salt);
             String encrypted = encrypt("Hello World!");
 
             curCrypto.setTestEncrypted(encrypted);
             cryptoDao.updateCryptoModel(curCrypto);
 
-            encryptDB();
+            //encryptDB();
 
-            // Uncomment the next line to finalize the encryption process
+            // create master user
+            //User masterUser = new User(0, "admin", "admin", "admin", encrypted, false);
+            createMasterUser(password);
+
             setDBEncrypted(true);
             isLoggedIn = true;
         } catch (Exception e) {
             //e.printStackTrace();
             key = null;
             System.err.println("DB encryption setup failed");
+        }
+    }
+
+    /**
+     * Creates and registers the master user aka admin user.
+     * The master user is used to encrypt and decrypt the database.
+     */
+    public static void createMasterUser(String password) {
+        if (isLoggedIn)
+            return;
+
+        Connection connection = ConnectionBuilder.getConnection();
+
+        try {
+            // Generate the secret key from the password
+            key = getKeyFromPassword(password, salt);
+
+            // create master user
+            PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('admin', 'admin', 'admin', ?)");
+            insertStatement.setString(1, encrypt(password));
+            insertStatement.executeUpdate();
+
+            isLoggedIn = true;
+            currentUser = new User(0, "admin", "admin", "admin", encrypt(password), false);
+            currentUser.login(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Login failed, DB cannot be decrypted");
+        }
+    }
+
+    public static String getMasterKey() {
+        String masterKey = null;
+
+        try (InputStream output = new FileInputStream("config.properties")) {
+            Properties prop = new Properties();
+            prop.load(output);
+            masterKey = prop.getProperty("masterKey");
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+
+        return masterKey;
+    }
+
+    public static void loginAsUser(String user, String password) {
+        if (isLoggedIn || !isDBEncrypted())
+            return;
+
+        try {
+            // Get User From DB
+            Connection connection = ConnectionBuilder.getConnection();
+            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+            selectStatement.setString(1, user.toLowerCase().trim());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                System.err.println("Login failed, user not found");
+                throw new IllegalStateException("Login failed, user not found");
+            }
+
+            currentUser = User.fromResultSet(resultSet);
+            assert currentUser != null;
+            currentUser.login(password);
+
+            if (user.equals("admin")) {
+                login(password);
+                return;
+            }
+
+            login(currentUser.getDecryptedMasterPw());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Login failed, DB cannot be decrypted");
+            throw new IllegalStateException("Login failed, DB cannot be decrypted");
+        }
+
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+
+    public static User createNewUser(User newUser, String password) {
+        if (!isLoggedIn || !isDBEncrypted())
+            return null;
+
+        // Current must be the master user
+        if (currentUser == null || !currentUser.getUsername().equals("admin"))
+            return null;
+
+        String masterPassword = currentUser.getEncryptedMasterPw();
+
+        try {
+            SecretKey userKey = getKeyFromPassword(password);
+
+            // Get User From DB
+            Connection connection = ConnectionBuilder.getConnection();
+            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+            selectStatement.setString(1, newUser.getUsername());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                System.err.println("User already exists");
+                return null;
+            }
+
+            String hashedMasterPwKey = encrypt(masterPassword, userKey);
+
+            PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES (?, ?, ?, ?)");
+            insertStatement.setString(1, newUser.getUsername());
+            insertStatement.setString(2, newUser.getFirstname());
+            insertStatement.setString(3, newUser.getSurname());
+            insertStatement.setString(4, hashedMasterPwKey);
+            insertStatement.executeUpdate();
+
+            return newUser;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static String setNewPassword(User user, String oldPassword, String newPassword) {
+        if (!isLoggedIn || !isDBEncrypted())
+            return "Login required";
+
+        try {
+            SecretKey userKey = getKeyFromPassword(oldPassword);
+
+            // Get User From DB
+            Connection connection = ConnectionBuilder.getConnection();
+            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+            selectStatement.setString(1, user.getUsername());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                return "User not found";
+            }
+
+            String hashedMasterPwKey = resultSet.getString("hashedMasterPwKey");
+            String decrypted = decrypt(hashedMasterPwKey, userKey);
+
+            if (!decrypted.equals(oldPassword)) {
+                return "Invalid password";
+            }
+
+            String newHashedMasterPwKey = encrypt(newPassword, userKey);
+
+            PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET hashedMasterPwKey = ? WHERE username = ?");
+            updateStatement.setString(1, newHashedMasterPwKey);
+            updateStatement.setString(2, user.getUsername());
+            updateStatement.executeUpdate();
+
+            return "Password updated";
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "Error: " + e.getMessage();
         }
     }
 
@@ -225,6 +407,9 @@ public class CryptoUtils {
                 if (table.startsWith("sqlite_"))
                     continue;
                 if (table.startsWith("encrypted_"))
+                    continue;
+                // User table should not be encrypted
+                if (table.equals("user"))
                     continue;
 
                 System.out.println("Encrypting table: " + table);
@@ -442,5 +627,29 @@ public class CryptoUtils {
         Collections.addAll(tables, Arrays.stream(getAllTablesForEncryption()).filter(s -> !s.startsWith("encrypted")).toArray(String[]::new));
 
         return tables.toArray(new String[0]);
+    }
+
+    /**
+     * Generates a random salt for password hashing.
+     * The salt is a byte array of 16 bytes.
+     *
+     * @return The generated salt.
+     */
+    public static byte[] generateSalt() {
+        byte[] salt = new byte[16];
+        new Random().nextBytes(salt);
+        return salt;
+    }
+
+    public static String hashPassword(String password) {
+        String hashedPassword = null;
+
+        try {
+            hashedPassword = encrypt(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return hashedPassword;
     }
 }
