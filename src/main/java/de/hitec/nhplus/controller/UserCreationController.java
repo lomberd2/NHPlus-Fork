@@ -29,6 +29,9 @@ public class UserCreationController {
     public UserCreationController() {
     }
 
+    private boolean isEdit = false;
+    private User user = null;
+
     /**
      * Set the fields of the form to the values of the given user.
      * Also sets the title and submit button text accordingly.
@@ -54,6 +57,8 @@ public class UserCreationController {
             shouldChangePassword.setSelected(!newValue.isEmpty());
         });
 
+        isEdit = true;
+        this.user = user;
     }
 
     @FXML
@@ -68,6 +73,10 @@ public class UserCreationController {
 
     @FXML
     private void handleCreateUser() {
+        if (isEdit) {
+            handleUpdateUser();
+            return;
+        }
 
         if (usernameField.getText().isEmpty() || firstnameField.getText().isEmpty() || surnameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             showAlert("Error", "Please fill out all fields");
@@ -85,6 +94,15 @@ public class UserCreationController {
             showAlert("Error", "User could not be created");
         }
 
+    }
+
+    private void handleUpdateUser() {
+        if (usernameField.getText().isEmpty() || firstnameField.getText().isEmpty() || surnameField.getText().isEmpty()) {
+            showAlert("Error", "Please fill out all fields");
+            return;
+        }
+
+        CryptoUtils.updateUser(user, usernameField.getText(), firstnameField.getText(), surnameField.getText(), passwordField.getText(), shouldChangePassword.isSelected());
     }
 
     private void showAlert(String title, String message) {
