@@ -31,8 +31,8 @@ public class SetUpDB {
         SetUpDB.wipeDb(connection);
         SetUpDB.setUpTablePatient(connection);
         SetUpDB.setUpTableTreatment(connection);
-        SetUpDB.setUpTableCaregiver(connection);
         SetUpDB.setUpTableCrypto(connection);
+        SetUpDB.setUpTableCaregiver(connection);
         SetUpDB.setUpTableUser(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
@@ -48,9 +48,6 @@ public class SetUpDB {
      */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE patient");
-            statement.execute("DROP TABLE treatment");
-            statement.execute("DROP TABLE caregiver");
             String[] tables = DbUtils.getAllTables();
 
             // add 'user' to the list of tables to drop
