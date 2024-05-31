@@ -5,9 +5,11 @@ import de.hitec.nhplus.model.Caregiver;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalDate;
 import static de.hitec.nhplus.utils.DateConverter.convertStringToLocalTime;
@@ -30,9 +32,15 @@ public class SetUpDB {
         SetUpDB.setUpTablePatient(connection);
         SetUpDB.setUpTableTreatment(connection);
         SetUpDB.setUpTableCaregiver(connection);
+        SetUpDB.setUpTableCrypto(connection);
+        SetUpDB.setUpTableUser(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
         SetUpDB.setUpCaregiver();
+        SetUpDB.setUpCrypto();
+        //SetUpDB.setUpUserForTesting();
+        setUpArchivedTreatment(connection);
+        setUpArchivedPatient(connection);
     }
 
     /**
@@ -43,6 +51,15 @@ public class SetUpDB {
             statement.execute("DROP TABLE patient");
             statement.execute("DROP TABLE treatment");
             statement.execute("DROP TABLE caregiver");
+            String[] tables = DbUtils.getAllTables();
+
+            // add 'user' to the list of tables to drop
+            tables = Arrays.copyOf(tables, tables.length + 1);
+            tables[tables.length - 1] = "user";
+
+            for (String table : tables) {
+                statement.execute("DROP TABLE IF EXISTS " + table);
+            }
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
@@ -55,8 +72,7 @@ public class SetUpDB {
                 "   surname TEXT NOT NULL, " +
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
-                "   roomnumber TEXT NOT NULL, " +
-                "   assets TEXt NOT NULL" +
+                "   roomnumber TEXT NOT NULL " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -97,16 +113,46 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpTableCrypto(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS crypto (" +
+                "   id INTEGER PRIMARY KEY, " +
+                "   isDBEncrypted INTEGER NOT NULL DEFAULT 0, " +
+                "   testEncrypted TEXT" +
+                ");";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private static void setUpTableUser(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS user (" +
+                "   id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   username TEXT NOT NULL, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   hashedMasterPwKey TEXT NOT NULL, " +
+                "   needsToChangePw INT NOT NULL DEFAULT TRUE" +
+                ");";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 
     private static void setUpPatients() {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
-            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202", "vermögend"));
-            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010", "arm"));
-            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002", "normal"));
-            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013", "normal"));
-            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001", "sehr vermögend"));
-            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110", "arm"));
+            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202"));
+            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010"));
+            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002"));
+            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013"));
+            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001"));
+            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -140,6 +186,66 @@ public class SetUpDB {
             dao.create(new Treatment(17, 6, convertStringToLocalDate("2023-09-01"), convertStringToLocalTime("16:00"), convertStringToLocalTime("17:00"), "KG", "Massage der Extremitäten zur Verbesserung der Durchblutung"));
         } catch (SQLException exception) {
             exception.printStackTrace();
+        }
+    }
+
+    private static void setUpCrypto() {
+        try {
+            Connection connection = ConnectionBuilder.getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO crypto (id, isDBEncrypted, testEncrypted) VALUES (1, 0, 'Test');");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private static void setUpUserForTesting() {
+        try {
+            Connection connection = ConnectionBuilder.getConnection();
+            Statement statement = connection.createStatement();
+
+            // 5 mock users
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('admin', 'Admin', 'Admin', 'admin');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user1', 'User', 'One', 'user1');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user2', 'User', 'Two', 'user2');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user3', 'User', 'Three', 'user3');");
+            statement.execute("INSERT INTO user (username, firstname, surname, hashedMasterPwKey) VALUES ('user4', 'User', 'Four', 'user4');");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
+    private static void setUpArchivedTreatment(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedTreatment (" +
+                "   Tid INTEGER PRIMARY KEY, " +
+                "   Pid INTEGER NOT NULL, " +
+                "   Date TEXT NOT NULL, " +
+                "   Begin TEXT NOT NULL, " +
+                "   End TEXT NOT NULL, " +
+                "   Description TEXT NOT NULL, " +
+                "   Remarks TEXT NOT NULL" +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private static void setUpArchivedPatient(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedPatient (" +
+                "   Pid INTEGER PRIMARY KEY, " +
+                "   Name TEXT NOT NULL, " +
+                "   Surname TEXT NOT NULL, " +
+                "   Birthdate TEXT NOT NULL, " +
+                "   CareLevel TEXT NOT NULL, " +
+                "   Room TEXT NOT NULL " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 

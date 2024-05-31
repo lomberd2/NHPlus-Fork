@@ -5,6 +5,8 @@ module de.hitec.nhplus {
     requires org.controlsfx.controls;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires java.desktop;
+    requires javafx.web;
 
     opens de.hitec.nhplus to javafx.fxml;
     opens de.hitec.nhplus.controller to javafx.fxml;
@@ -13,4 +15,5 @@ module de.hitec.nhplus {
     exports de.hitec.nhplus;
     exports de.hitec.nhplus.controller;
     exports de.hitec.nhplus.model;
+    exports de.hitec.nhplus.datastorage;
 }

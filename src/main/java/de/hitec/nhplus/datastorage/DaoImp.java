@@ -13,7 +13,13 @@ public abstract class DaoImp<T> implements Dao<T> {
 
     @Override
     public void create(T t) throws SQLException {
-        getCreateStatement(t).executeUpdate();
+        PreparedStatement createStatement = getCreateStatement(t);
+
+        //System.out.println(createStatement.toString());
+        //System.out.println(createStatement.getMetaData());
+        //System.out.println(createStatement.getParameterMetaData());
+
+        createStatement.executeUpdate();
     }
 
     @Override
