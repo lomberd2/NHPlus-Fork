@@ -1,9 +1,7 @@
 package de.hitec.nhplus.utils;
 
-import de.hitec.nhplus.datastorage.ConnectionBuilder;
-import de.hitec.nhplus.datastorage.DaoFactory;
-import de.hitec.nhplus.datastorage.PatientDao;
-import de.hitec.nhplus.datastorage.TreatmentDao;
+import de.hitec.nhplus.datastorage.*;
+import de.hitec.nhplus.model.Caregiver;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 
@@ -34,11 +32,15 @@ public class SetUpDB {
         SetUpDB.setUpTablePatient(connection);
         SetUpDB.setUpTableTreatment(connection);
         SetUpDB.setUpTableCrypto(connection);
+        SetUpDB.setUpTableCaregiver(connection);
         SetUpDB.setUpTableUser(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
+        SetUpDB.setUpCaregiver();
         SetUpDB.setUpCrypto();
         //SetUpDB.setUpUserForTesting();
+        setUpArchivedTreatment(connection);
+        setUpArchivedPatient(connection);
     }
 
     /**
@@ -68,6 +70,19 @@ public class SetUpDB {
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
                 "   roomnumber TEXT NOT NULL " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+    private static void setUpTableCaregiver(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS caregiver (" +
+                "   cid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   telephone TEXT NOT NULL " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -139,6 +154,19 @@ public class SetUpDB {
             exception.printStackTrace();
         }
     }
+    private static void setUpCaregiver() {
+        try {
+            CaregiverDao dao = DaoFactory.getDaoFactory().createCaregiverDAO();
+            dao.create(new Caregiver("Hans", "Wurst","01929382"));
+            dao.create(new Caregiver("Axel", "Schweis","111000999"));
+            dao.create(new Caregiver("Reiner", "Wahnsinn", "991928391"));
+            dao.create(new Caregiver("Dick", "Tator","7483291234 0"));
+            dao.create(new Caregiver("Rosa", "Wurst", "728337234123"));
+            dao.create(new Caregiver("Frank", "Reich", "000001111000"));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 
     private static void setUpTreatments() {
         try {
@@ -183,6 +211,39 @@ public class SetUpDB {
             exception.printStackTrace();
         }
 
+    }
+
+    private static void setUpArchivedTreatment(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedTreatment (" +
+                "   Tid INTEGER PRIMARY KEY, " +
+                "   Pid INTEGER NOT NULL, " +
+                "   Date TEXT NOT NULL, " +
+                "   Begin TEXT NOT NULL, " +
+                "   End TEXT NOT NULL, " +
+                "   Description TEXT NOT NULL, " +
+                "   Remarks TEXT NOT NULL" +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private static void setUpArchivedPatient(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedPatient (" +
+                "   Pid INTEGER PRIMARY KEY, " +
+                "   Name TEXT NOT NULL, " +
+                "   Surname TEXT NOT NULL, " +
+                "   Birthdate TEXT NOT NULL, " +
+                "   CareLevel TEXT NOT NULL, " +
+                "   Room TEXT NOT NULL " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     public static void main(String[] args) {
