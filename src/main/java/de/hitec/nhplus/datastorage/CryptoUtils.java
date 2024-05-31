@@ -3,11 +3,15 @@ package de.hitec.nhplus.datastorage;
 import de.hitec.nhplus.model.CryptoModel;
 import de.hitec.nhplus.model.User;
 import de.hitec.nhplus.utils.DbUtils;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -16,7 +20,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collections;
 
 public class CryptoUtils {
     private final static String algorithm = "AES";
@@ -201,7 +208,7 @@ public class CryptoUtils {
      * Sets up the database encryption by encrypting the test string with the provided password.
      * If the encryption is successful, the database is encrypted.
      *
-     * @param password The password provided by the user.
+     * @param password The master password provided by the user.
      * @throws Exception If the setup fails or the database cannot be encrypted.
      */
     public static void setupDBEncryption(String password) throws Exception {
@@ -234,8 +241,9 @@ public class CryptoUtils {
     }
 
     /**
-     * Creates and registers the master user aka admin user.
-     * The master user is used to encrypt and decrypt the database.
+     * Creates the master user aka admin user with the provided password.
+     *
+     * @param password The password for the master user.
      */
     public static void createMasterUser(String password) {
         if (isLoggedIn)
@@ -261,20 +269,14 @@ public class CryptoUtils {
         }
     }
 
-    public static String getMasterKey() {
-        String masterKey = null;
-
-        try (InputStream output = new FileInputStream("config.properties")) {
-            Properties prop = new Properties();
-            prop.load(output);
-            masterKey = prop.getProperty("masterKey");
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
-
-        return masterKey;
-    }
-
+    /**
+     * Logs in as a specific user by decrypting the test string with the provided password.
+     * If the decrypted string matches the expected value, the database is decrypted.
+     *
+     * @param user     The username of the user.
+     * @param password The password provided by the user.
+     * @throws IllegalStateException If the login fails or the database cannot be decrypted.
+     */
     public static void loginAsUser(String user, String password) {
         if (isLoggedIn || !isDBEncrypted())
             return;
@@ -300,7 +302,12 @@ public class CryptoUtils {
                 return;
             }
 
-            login(currentUser.getDecryptedMasterPw());
+            String masterPw = currentUser.getDecryptedMasterPw();
+
+            if (currentUser.getNeedsToChangePw())
+                promptToChangePassword(currentUser, masterPw);
+
+            login(masterPw);
         } catch (Exception e) {
             //e.printStackTrace();
             System.err.println("Login failed, DB cannot be decrypted");
@@ -309,11 +316,156 @@ public class CryptoUtils {
 
     }
 
+    /**
+     * This method prompts the user to change their password.
+     * It checks if the user exists and if the database is encrypted.
+     * If these conditions are met, it shows a dialog for the user to enter a new password.
+     *
+     * @param user The user who needs to change their password.
+     * @param masterPw The master password of the db.
+     * @return true if the operation is successful, false otherwise.
+     */
+    public static boolean promptToChangePassword(User user, String masterPw) {
+        Connection connection = ConnectionBuilder.getConnection();
+        if (!hasUser(connection, user) || !isDBEncrypted()) {
+            return false;
+        }
+
+        // show and wait for user to enter new password
+        DialogPane dialogPane = new DialogPane();
+
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Enter new password");
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm new password");
+
+        // Add password fields
+        VBox content = new VBox();
+        HBox passwordBox = new HBox();
+        passwordBox.setSpacing(10);
+
+        passwordBox.getChildren().add(passwordField);
+        passwordBox.getChildren().add(confirmPasswordField);
+
+        TextArea errorText = new TextArea();
+        errorText.setEditable(false);
+        errorText.setWrapText(true);
+        errorText.setPrefHeight(50);
+
+        // Add details and check for password requirements
+        errorText.setText("Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+
+        // content
+        content.getChildren().add(passwordBox);
+        content.getChildren().add(errorText);
+
+        dialogPane.setContent(content);
+        dialogPane.getButtonTypes().add(ButtonType.APPLY);
+        dialogPane.getButtonTypes().add(ButtonType.CANCEL);
+
+        // Disable apply button until both fields are filled and match
+        dialogPane.lookupButton(ButtonType.APPLY).setDisable(true);
+
+        passwordListener(dialogPane, passwordField, confirmPasswordField, errorText);
+        passwordListener(dialogPane, confirmPasswordField, passwordField, errorText);
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Change Password");
+        dialog.setHeaderText("Enter new password for user: " + user.getUsername());
+        dialog.setDialogPane(dialogPane);
+
+        if (dialog.showAndWait().isEmpty() || dialog.getResult() == null || dialog.getResult() == ButtonType.CANCEL) {
+            throw new IllegalStateException("Password change cancelled");
+        }
+
+        String newPassword = passwordField.getText();
+
+        String results = setNewPassword(user, masterPw, newPassword);
+        if (!results.equals("Password updated")) {
+            System.out.println("Error: " + results);
+            return false;
+        }
+
+        // Check if user "needs to change password" and update if necessary
+        if (user.getNeedsToChangePw()) {
+            disableUserHasToChangePw(user);
+            user.setNeedsToChangePw(false);
+        }
+        return true;
+    }
+
+    /**
+     * This method adds a listener to the password fields in the password change dialog.
+     * It checks if the new password and the confirmation password are the same and meet the password requirements.
+     * If the conditions are met, it enables the Apply button in the dialog.
+     * If the conditions are not met, it shows an error message in the dialog.
+     *
+     * @param dialogPane           The DialogPane that contains the password fields and the Apply button.
+     * @param passwordField        The PasswordField for the new password.
+     * @param confirmPasswordField The PasswordField for the confirmation password.
+     * @param errorText            The TextArea that displays the error message.
+     */
+    private static void passwordListener(DialogPane dialogPane, PasswordField passwordField, PasswordField confirmPasswordField, TextArea errorText) {
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            boolean isValid = !newValue.isEmpty() && newValue.equals(confirmPasswordField.getText());
+
+            isValid = isValid && checkPassword(newValue);
+
+            dialogPane.lookupButton(ButtonType.APPLY).setDisable(!isValid);
+            errorText.setVisible(!isValid && !newValue.isEmpty());
+        });
+    }
+
+    /**
+     * This method checks if a password meets the requirements.
+     * The requirements are: at least 8 characters, at least 1 uppercase letter,
+     * at least 1 lowercase letter, at least 1 number, and at least 1 special character.
+     *
+     * @param password The password to be checked.
+     * @return true if the password meets the requirements, false otherwise.
+     */
+    public static boolean checkPassword(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+
+        boolean hasUppercase = false;
+        boolean hasLowercase = false;
+        boolean hasNumber = false;
+        boolean hasSpecial = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUppercase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowercase = true;
+            } else if (Character.isDigit(c)) {
+                hasNumber = true;
+            } else {
+                hasSpecial = true;
+            }
+        }
+
+        return hasUppercase && hasLowercase && hasNumber && hasSpecial;
+    }
+
+    /**
+     * Returns the current logged-in user.
+     *
+     * @return The current User object.
+     */
     public static User getCurrentUser() {
         return currentUser;
     }
 
-
+    /**
+     * Creates a new user with the provided password.
+     *
+     * @param newUser  The new User object to be created.
+     * @param password The password for the new user.
+     * @return The created User object.
+     */
     public static User createNewUser(User newUser, String password) {
         if (!isLoggedIn || !isDBEncrypted())
             return null;
@@ -329,11 +481,9 @@ public class CryptoUtils {
 
             // Get User From DB
             Connection connection = ConnectionBuilder.getConnection();
-            PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
-            selectStatement.setString(1, newUser.getUsername());
-            ResultSet resultSet = selectStatement.executeQuery();
 
-            if (resultSet.next()) {
+            // check if user exists
+            if (hasUser(connection, newUser)) {
                 System.err.println("User already exists");
                 return null;
             }
@@ -355,31 +505,153 @@ public class CryptoUtils {
         }
     }
 
-    public static String setNewPassword(User user, String oldPassword, String newPassword) {
+    /**
+     * Deletes a user from the database.
+     *
+     * @param userToDelete The user to be deleted.
+     * @return true if the user is successfully deleted, false otherwise.
+     */
+    public static boolean deleteUser(User userToDelete) {
         if (!isLoggedIn || !isDBEncrypted())
-            return "Login required";
+            return false;
+
+        // Current must be the master user
+        if (currentUser == null || !currentUser.getUsername().equals("admin"))
+            return false;
 
         try {
-            SecretKey userKey = getKeyFromPassword(oldPassword);
-
-            // Get User From DB
+            // check if user exists
             Connection connection = ConnectionBuilder.getConnection();
+
+            if (!hasUser(connection, userToDelete)) {
+                System.err.println("User not found");
+                return false;
+            }
+
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM user WHERE username = ?");
+            deleteStatement.setString(1, userToDelete.getUsername());
+            deleteStatement.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a user exists in the database.
+     *
+     * @param connection The database connection.
+     * @param user       The user to be checked.
+     * @return true if the user exists, false otherwise.
+     */
+    public static boolean hasUser(Connection connection, User user) {
+        try {
             PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
             selectStatement.setString(1, user.getUsername());
             ResultSet resultSet = selectStatement.executeQuery();
 
             if (!resultSet.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Updates the details of a user in the database.
+     * The method checks if the user is logged in and if the database is encrypted.
+     * If these conditions are met, it updates the user's username, firstname, surname, password, and the flag indicating if the user needs to change their password.
+     *
+     * @param user The User object to be updated.
+     * @param username The new username for the user.
+     * @param firstname The new firstname for the user.
+     * @param surname The new surname for the user.
+     * @param password The new password for the user.
+     * @param needsToChangePw The flag indicating if the user needs to change their password.
+     */
+    public static void updateUser(User user, String username, String firstname, String surname, String password, boolean needsToChangePw) {
+        if (!isLoggedIn || !isDBEncrypted())
+            return;
+
+        // Current must be the master user
+        if (currentUser == null || !currentUser.getUsername().equals("admin"))
+            return;
+
+        try {
+            // Get User From DB
+            Connection connection = ConnectionBuilder.getConnection();
+
+            if (!hasUser(connection, user)) {
+                System.err.println("User not found");
+                return;
+            }
+
+            // check for changes in names
+            if (!user.getUsername().equals(username) || !user.getFirstname().equals(firstname) || !user.getSurname().equals(surname)) {
+                PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET username = ?, firstname = ?, surname = ? WHERE username = ?");
+                updateStatement.setString(1, username);
+                updateStatement.setString(2, firstname);
+                updateStatement.setString(3, surname);
+                updateStatement.setString(4, user.getUsername());
+                updateStatement.executeUpdate();
+            }
+
+            // check for password change
+            if (!password.isEmpty()) {
+                String masterPw = currentUser.getDecryptedMasterPw();
+                SecretKey newUserKey = getKeyFromPassword(password);
+                String newHashedMasterPwKey = encrypt(masterPw, newUserKey);
+
+                PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET hashedMasterPwKey = ? WHERE username = ?");
+                updateStatement.setString(1, newHashedMasterPwKey);
+                updateStatement.setString(2, user.getUsername());
+                updateStatement.executeUpdate();
+            }
+
+            // check for needsToChangePw change
+            if (user.getNeedsToChangePw() != needsToChangePw) {
+                PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET needsToChangePw = ? WHERE username = ?");
+                updateStatement.setBoolean(1, needsToChangePw);
+                updateStatement.setString(2, user.getUsername());
+                updateStatement.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    /**
+     * Sets a new password for a user.
+     *
+     * @param user        The user who wants to change their password.
+     * @param newPassword The new password of the user.
+     * @return A string message indicating the result of the operation.
+     */
+    public static String setNewPassword(User user, String masterPw, String newPassword) {
+        if (!isDBEncrypted())
+            return "DB encryption not finalized";
+
+        try {
+            // has user
+            Connection connection = ConnectionBuilder.getConnection();
+
+            if (!hasUser(connection, user)) {
                 return "User not found";
             }
 
-            String hashedMasterPwKey = resultSet.getString("hashedMasterPwKey");
-            String decrypted = decrypt(hashedMasterPwKey, userKey);
-
-            if (!decrypted.equals(oldPassword)) {
-                return "Invalid password";
-            }
-
-            String newHashedMasterPwKey = encrypt(newPassword, userKey);
+            SecretKey newUserKey = getKeyFromPassword(newPassword);
+            String newHashedMasterPwKey = encrypt(masterPw, newUserKey);
 
             PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET hashedMasterPwKey = ? WHERE username = ?");
             updateStatement.setString(1, newHashedMasterPwKey);
@@ -390,6 +662,26 @@ public class CryptoUtils {
         } catch (Exception e) {
             //e.printStackTrace();
             return "Error: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Disables the 'needsToChangePw' flag for a user in the database.
+     * This method is used to indicate that a user no longer needs to change their password at their next login.
+     *
+     * @param user The User object whose 'needsToChangePw' flag is to be updated.
+     */
+    private static void disableUserHasToChangePw(User user) {
+        Connection connection = ConnectionBuilder.getConnection();
+        user.setNeedsToChangePw(false);
+
+        try {
+            PreparedStatement updateStatement = connection.prepareStatement("UPDATE user SET needsToChangePw = ? WHERE username = ?");
+            updateStatement.setBoolean(1, false);
+            updateStatement.setString(2, user.getUsername());
+            updateStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Error: " + e.getMessage());
         }
     }
 
@@ -629,27 +921,4 @@ public class CryptoUtils {
         return tables.toArray(new String[0]);
     }
 
-    /**
-     * Generates a random salt for password hashing.
-     * The salt is a byte array of 16 bytes.
-     *
-     * @return The generated salt.
-     */
-    public static byte[] generateSalt() {
-        byte[] salt = new byte[16];
-        new Random().nextBytes(salt);
-        return salt;
-    }
-
-    public static String hashPassword(String password) {
-        String hashedPassword = null;
-
-        try {
-            hashedPassword = encrypt(password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return hashedPassword;
-    }
 }

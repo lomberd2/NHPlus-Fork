@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="updated text">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="added javadoc">
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/ManageUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/ManageUserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="JblDbEncryption" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,6 +75,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "git-widget-placeholder": "LoginProtoyp",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/T.Thiel/Documents/23/FA23E/LF05/NHPlus/NHPlus/db/nursingHome.db",
@@ -219,6 +218,8 @@
       <workItem from="1716817479750" duration="1575000" />
       <workItem from="1716822114856" duration="1032000" />
       <workItem from="1716970238547" duration="2028000" />
+      <workItem from="1717155582971" duration="552000" />
+      <workItem from="1717162876727" duration="10686000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -524,7 +525,63 @@
       <option name="project" value="LOCAL" />
       <updated>1717099282079</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="code cleanup">
+      <option name="closed" value="true" />
+      <created>1717163335856</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1717163335856</updated>
+    </task>
+    <task id="LOCAL-00040" summary="removed unused, formated and optimized imports">
+      <option name="closed" value="true" />
+      <created>1717163758791</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1717163758791</updated>
+    </task>
+    <task id="LOCAL-00041" summary="removed unused and added comments / javadocs">
+      <option name="closed" value="true" />
+      <created>1717163968233</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1717163968233</updated>
+    </task>
+    <task id="LOCAL-00042" summary="added comments / javadocs and refactored &quot;has user&quot;">
+      <option name="closed" value="true" />
+      <created>1717164388218</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1717164388218</updated>
+    </task>
+    <task id="LOCAL-00043" summary="implemented edit user and force change pw on login">
+      <option name="closed" value="true" />
+      <created>1717172872229</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1717172872229</updated>
+    </task>
+    <task id="LOCAL-00044" summary="added javadoc">
+      <option name="closed" value="true" />
+      <created>1717173355890</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1717173355890</updated>
+    </task>
+    <task id="LOCAL-00045" summary="added javadoc">
+      <option name="closed" value="true" />
+      <created>1717173499129</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1717173499129</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,12 +626,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added crypto table" />
-    <MESSAGE value="added crypto table &amp; dao" />
-    <MESSAGE value="refactored Crypto Methods" />
-    <MESSAGE value="impl. setup db encryption logic" />
-    <MESSAGE value="impl. get generic all tables from sqlite_master table" />
-    <MESSAGE value="refactored methods and moved to appropriate classes" />
     <MESSAGE value="removed unneeded comments and todos" />
     <MESSAGE value="zwischenstand" />
     <MESSAGE value="implemented decription, still todos left" />
@@ -594,6 +645,12 @@
     <MESSAGE value="added username box clear" />
     <MESSAGE value="updated dependencies &amp; added web" />
     <MESSAGE value="updated text" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated text" />
+    <MESSAGE value="code cleanup" />
+    <MESSAGE value="removed unused, formated and optimized imports" />
+    <MESSAGE value="removed unused and added comments / javadocs" />
+    <MESSAGE value="added comments / javadocs and refactored &quot;has user&quot;" />
+    <MESSAGE value="implemented edit user and force change pw on login" />
+    <MESSAGE value="added javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="added javadoc" />
   </component>
 </project>

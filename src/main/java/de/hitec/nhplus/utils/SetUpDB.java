@@ -5,7 +5,6 @@ import de.hitec.nhplus.model.Caregiver;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -77,6 +76,7 @@ public class SetUpDB {
             System.out.println(exception.getMessage());
         }
     }
+
     private static void setUpTableCaregiver(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS caregiver (" +
                 "   cid INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -154,13 +154,14 @@ public class SetUpDB {
             exception.printStackTrace();
         }
     }
+
     private static void setUpCaregiver() {
         try {
             CaregiverDao dao = DaoFactory.getDaoFactory().createCaregiverDAO();
-            dao.create(new Caregiver("Hans", "Wurst","01929382"));
-            dao.create(new Caregiver("Axel", "Schweis","111000999"));
+            dao.create(new Caregiver("Hans", "Wurst", "01929382"));
+            dao.create(new Caregiver("Axel", "Schweis", "111000999"));
             dao.create(new Caregiver("Reiner", "Wahnsinn", "991928391"));
-            dao.create(new Caregiver("Dick", "Tator","7483291234 0"));
+            dao.create(new Caregiver("Dick", "Tator", "7483291234 0"));
             dao.create(new Caregiver("Rosa", "Wurst", "728337234123"));
             dao.create(new Caregiver("Frank", "Reich", "000001111000"));
         } catch (SQLException exception) {

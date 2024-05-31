@@ -84,21 +84,21 @@ public class User {
         this.needsToChangePw = needsToChangePw;
     }
 
-    /**
-     * Re-hashes the master password key with the given new password.
-     *
-     * @param newPassword
-     */
-    public void setNewPassword(String oldPassword, String newPassword) {
+
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
     }
 
-    public void login(String password) {
+    public void login(String password) throws Exception {
         this.password = password;
         try {
             this.secretKey = CryptoUtils.getKeyFromPassword(password);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // check if password is correct
+       CryptoUtils.decrypt(hashedMasterPwKey, secretKey);
     }
 
     public String getEncryptedMasterPw() {
@@ -129,6 +129,9 @@ public class User {
         }
     }
 
+    public String getPassword() {
+        return password;
+    }
 
     public static User fromResultSet(ResultSet resultSet) {
         try {

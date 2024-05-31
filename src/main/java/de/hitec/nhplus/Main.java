@@ -52,7 +52,7 @@ public class Main extends Application {
         loadSceneAsPopup(loader, "NHPlus - Create Admin User");
     }
 
-    public static void showAdminUserCreation( User user ) {
+    public static void showAdminUserCreation(User user) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/UserCreationView.fxml"));
         loadSceneAsPopup(loader, "NHPlus - Create Admin User");
 
@@ -89,7 +89,14 @@ public class Main extends Application {
 
     public static void loadSceneAsPopup(FXMLLoader loader, String title) {
         try {
-            Parent root = loader.load();
+            loadSceneAsPopup((Parent) loader.load(), title);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void loadSceneAsPopup(Parent root, String title) {
+        try {
             Scene scene = new Scene(root);
 
             Stage dialog = new Stage();
