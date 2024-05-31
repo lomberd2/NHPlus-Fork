@@ -20,6 +20,23 @@ public class Main extends Application {
 
     protected static Stage primaryStage;
 
+    /*
+     * https://stackoverflow.com/a/37270000
+     */
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                try {
+                    CryptoUtils.logout();
+                    ConnectionBuilder.closeConnection();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     @Override
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
@@ -76,9 +93,6 @@ public class Main extends Application {
             Main.primaryStage.show();
 
             Main.primaryStage.setOnCloseRequest(event -> {
-                CryptoUtils.logout();
-
-                ConnectionBuilder.closeConnection();
                 Platform.exit();
                 System.exit(0);
             });
