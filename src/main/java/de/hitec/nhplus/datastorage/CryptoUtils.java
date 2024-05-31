@@ -7,7 +7,8 @@ import de.hitec.nhplus.utils.DbUtils;
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -201,7 +202,7 @@ public class CryptoUtils {
      * Sets up the database encryption by encrypting the test string with the provided password.
      * If the encryption is successful, the database is encrypted.
      *
-     * @param password The password provided by the user.
+     * @param password The master password provided by the user.
      * @throws Exception If the setup fails or the database cannot be encrypted.
      */
     public static void setupDBEncryption(String password) throws Exception {
@@ -234,8 +235,9 @@ public class CryptoUtils {
     }
 
     /**
-     * Creates and registers the master user aka admin user.
-     * The master user is used to encrypt and decrypt the database.
+     * Creates the master user aka admin user with the provided password.
+     *
+     * @param password The password for the master user.
      */
     public static void createMasterUser(String password) {
         if (isLoggedIn)
@@ -259,20 +261,6 @@ public class CryptoUtils {
             e.printStackTrace();
             System.err.println("Login failed, DB cannot be decrypted");
         }
-    }
-
-    public static String getMasterKey() {
-        String masterKey = null;
-
-        try (InputStream output = new FileInputStream("config.properties")) {
-            Properties prop = new Properties();
-            prop.load(output);
-            masterKey = prop.getProperty("masterKey");
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
-
-        return masterKey;
     }
 
     public static void loginAsUser(String user, String password) {
