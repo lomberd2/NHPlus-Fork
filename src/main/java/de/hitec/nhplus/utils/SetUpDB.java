@@ -41,7 +41,6 @@ public class SetUpDB {
         //SetUpDB.setUpUserForTesting();
         setUpArchivedTreatment(connection);
         setUpArchivedPatient(connection);
-
     }
 
     /**
@@ -188,10 +187,6 @@ public class SetUpDB {
 
     }
 
-
-
-
-
     private static void setUpArchivedTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedTreatment (" +
                 "   Tid INTEGER PRIMARY KEY, " +
@@ -224,7 +219,6 @@ public class SetUpDB {
             System.out.println(exception.getMessage());
         }
     }
-
 
     public static void main(String[] args) {
         SetUpDB.setUpDb();
