@@ -1,6 +1,7 @@
 package de.hitec.nhplus.controller;
 
 import de.hitec.nhplus.Main;
+import de.hitec.nhplus.datastorage.ArchivedTreatmentDao;
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 public class AllTreatmentController {
 
+    public Button buttonBlock;
     @FXML
     private TableView<Treatment> tableView;
 
@@ -138,9 +140,14 @@ public class AllTreatmentController {
     public void handleDelete() {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
         Treatment t = this.treatments.remove(index);
-        TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
+        archiveTreatment(t);
+    }
+
+    private void archiveTreatment(Treatment treatment) {
+        ArchivedTreatmentDao archivedTreatmentDao = DaoFactory.getDaoFactory().createArchivedTreatmentDao();
         try {
-            dao.deleteById(t.getTid());
+            archivedTreatmentDao.insert(treatment);
+            dao.deleteById(treatment.getTid());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

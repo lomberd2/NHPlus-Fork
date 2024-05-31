@@ -39,6 +39,8 @@ public class SetUpDB {
         SetUpDB.setUpTreatments();
         SetUpDB.setUpCrypto();
         //SetUpDB.setUpUserForTesting();
+        setUpArchivedTreatment(connection);
+        setUpArchivedPatient(connection);
     }
 
     /**
@@ -183,6 +185,39 @@ public class SetUpDB {
             exception.printStackTrace();
         }
 
+    }
+
+    private static void setUpArchivedTreatment(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedTreatment (" +
+                "   Tid INTEGER PRIMARY KEY, " +
+                "   Pid INTEGER NOT NULL, " +
+                "   Date TEXT NOT NULL, " +
+                "   Begin TEXT NOT NULL, " +
+                "   End TEXT NOT NULL, " +
+                "   Description TEXT NOT NULL, " +
+                "   Remarks TEXT NOT NULL" +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private static void setUpArchivedPatient(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS ArchivedPatient (" +
+                "   Pid INTEGER PRIMARY KEY, " +
+                "   Name TEXT NOT NULL, " +
+                "   Surname TEXT NOT NULL, " +
+                "   Birthdate TEXT NOT NULL, " +
+                "   CareLevel TEXT NOT NULL, " +
+                "   Room TEXT NOT NULL " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     public static void main(String[] args) {
