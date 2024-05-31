@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="updated gitignore for IntelliJ">
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllCaregiverController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/CaregiverDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Caregiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="updated gitignore for IntelliJ&#10;NHPlus neu:&#10; - Übersicht der Pfleger&#10; - Datenbankmodel erweitert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/MainWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +170,9 @@
       <workItem from="1716810194172" duration="9587000" />
       <workItem from="1716825651196" duration="432000" />
       <workItem from="1716833060689" duration="1905000" />
-      <workItem from="1716882898578" duration="777000" />
+      <workItem from="1716882898578" duration="2734000" />
+      <workItem from="1716888438173" duration="108000" />
+      <workItem from="1717143380052" duration="2535000" />
     </task>
     <task id="LOCAL-00001" summary="updated gitignore for IntelliJ">
       <option name="closed" value="true" />
@@ -192,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715065498644</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="updated gitignore for IntelliJ&#10;NHPlus neu:&#10; - Übersicht der Pfleger&#10; - Datenbankmodel erweitert">
+      <option name="closed" value="true" />
+      <created>1716884301410</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716884301410</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +209,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated gitignore for IntelliJ" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated gitignore for IntelliJ" />
+    <MESSAGE value="updated gitignore for IntelliJ&#10;NHPlus neu:&#10; - Übersicht der Pfleger&#10; - Datenbankmodel erweitert" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated gitignore for IntelliJ&#10;NHPlus neu:&#10; - Übersicht der Pfleger&#10; - Datenbankmodel erweitert" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
