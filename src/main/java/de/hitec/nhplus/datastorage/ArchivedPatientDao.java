@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ArchivedPatientDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     public ArchivedPatientDao() {
         this.connection = ConnectionBuilder.getConnection();

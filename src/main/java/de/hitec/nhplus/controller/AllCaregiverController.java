@@ -90,7 +90,7 @@ public class AllCaregiverController {
         this.tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Caregiver>()
         {
             @Override
-            public void changed(ObservableValue<? extends Caregiver> observableValue, Caregiver oldCaregiver, Caregiver newCaregiver) {;
+            public void changed(ObservableValue<? extends Caregiver> observableValue, Caregiver oldCaregiver, Caregiver newCaregiver) {
                 AllCaregiverController.this.btnDelete.setDisable(newCaregiver == null);
             }
         });
