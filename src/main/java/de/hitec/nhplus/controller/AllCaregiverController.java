@@ -27,38 +27,26 @@ import java.time.LocalDate;
  * It determines which data is displayed and how to react to events.
  */
 public class AllCaregiverController {
-
     @FXML
     private TableView<Caregiver> tableView;
-
     @FXML
     private TableColumn<Caregiver, Integer> colID;
-
     @FXML
     private TableColumn<Caregiver, String> colFirstName;
-
     @FXML
     private TableColumn<Caregiver, String> colSurname;
-
     @FXML
     private TableColumn<Caregiver, String> colTelephone;
-
     @FXML
     private Button btnDelete;
-
     @FXML
     private Button btnAdd;
-
     @FXML
     private TextField txfSurname;
-
     @FXML
     private TextField txfFirstname;
-
     @FXML
-    private TextField txfTelephone;
-
-    private final ObservableList<Caregiver> caregiver = FXCollections.observableArrayList();
+    private TextField txfTelephone;    private final ObservableList<Caregiver> caregiver = FXCollections.observableArrayList();
     private CaregiverDao dao;
 
     /**
@@ -106,6 +94,49 @@ public class AllCaregiverController {
         this.dao = DaoFactory.getDaoFactory().createCaregiverDAO();
         try {
             this.caregiver.addAll(this.dao.readAll());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    /**
+     * When a cell of the column with first names was changed, this method will be called, to persist the change.
+     *
+     * @param event Event including the changed object and the change.
+     */
+    @FXML
+    public void handleOnEditFirstname(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setFirstName(event.getNewValue());
+        this.doUpdate(event);
+    }
+    /**
+     * When a cell of the column with surnames was changed, this method will be called, to persist the change.
+     *
+     * @param event Event including the changed object and the change.
+     */
+    @FXML
+    public void handleOnEditSurname(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setSurname(event.getNewValue());
+        this.doUpdate(event);
+    }
+
+    /**
+     * When a cell of the column with the telephonenumber was changed, this method will be called, to persist the change.
+     *
+     * @param event Event including the changed object and the change.
+     */
+    @FXML
+    public void handleOnEditTelephone(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setTelephone(event.getNewValue());
+        this.doUpdate(event);
+    }
+    /**
+     * Updates a patient by calling the method <code>update()</code> of {@link PatientDao}.
+     *
+     * @param event Event including the changed object and the change.
+     */
+    private void doUpdate(TableColumn.CellEditEvent<Caregiver, String> event) {
+        try {
+            this.dao.update(event.getRowValue());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
