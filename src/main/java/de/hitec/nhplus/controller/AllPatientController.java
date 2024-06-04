@@ -218,6 +218,12 @@ public class AllPatientController {
         archivePatient(patient);
     }
 
+    /**
+     * This method archives a patient by inserting the patient's data into the ArchivedPatient table in the database.
+     * It also deletes the patient from the current Patient table.
+     *
+     * @param patient The patient object that is to be archived.
+     */
     private void archivePatient(Patient patient) {
         ArchivedPatientDao archivedPatientDao = DaoFactory.getDaoFactory().createArchivedPatientDao();
         try {
