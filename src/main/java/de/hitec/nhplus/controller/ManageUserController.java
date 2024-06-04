@@ -14,13 +14,13 @@ import javafx.stage.Window;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 public class ManageUserController {
     @FXML
     private TableView<User> tableView;
     @FXML
     private TextField idField;
-
     @FXML
     private HBox selectedUserBox;
 
@@ -33,6 +33,13 @@ public class ManageUserController {
         initTable();
     }
 
+    /**
+     * Initializes the TableView with columns and data from the User database.
+     * The method first clears any existing items and columns in the TableView.
+     * It then sets up the columns based on the fields in the User class, excluding the 'password' and 'secretKey' fields.
+     * After setting up the columns, it loads the data from the User database and adds each User to the TableView.
+     * It also sets up interaction handlers for the TableView, including a listener for selected items and a double-click event for editing users.
+     */
     private void initTable() {
         tableView.getItems().clear();
         tableView.getColumns().clear();
@@ -44,7 +51,7 @@ public class ManageUserController {
 
         // Set up table columns
         for (Field field : User.class.getDeclaredFields()) {
-            if (field.getName().equals("password") || field.getName().equals("secretKey") )
+            if (field.getName().equals("password") || field.getName().equals("secretKey"))
                 continue;
 
             TableColumn<User, String> column = new TableColumn<>(field.getName());
@@ -54,9 +61,7 @@ public class ManageUserController {
 
         // Load data from database
         try {
-
-            connection.prepareStatement("SELECT * FROM user");
-            var resultSet = connection.createStatement().executeQuery("SELECT * FROM user");
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM user");
 
             while (resultSet.next()) {
                 User user = User.fromResultSet(resultSet);
