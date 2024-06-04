@@ -5,15 +5,16 @@
 | ✓ | Datenbank Verschlüsselung | Joey
 | ✓ | Pfleger Modul | Jan
 | ✓ | Login | Jennifer
+| ✓ | Archive Data when no longer used (DSGVO) | Justin
 
 ### Unit Tests
-| Status | Description |
-| --- | --- |
-| ✓ | assetsStillAvailable |
-| ✓ | canEncrypt |
-| ✓ | canDecrypt |
-| ✓ | createUser |
-| ✓ | readUser |
-| ✓ | updateUser |
-| ✓ | deleteUser |
-| ? | testArchiveTreatment |
+| Status | Description | Assigned Person 
+| --- | --- | --- |
+| ✓ | assetsStillAvailable | Mohamad
+| ✓ | canEncrypt | Joey
+| ✓ | canDecrypt | Joey
+| ✓ | createUser | Jennifer
+| ✓ | readUser | Jennifer
+| ✓ | updateUser | Jennifer
+| ✓ | deleteUser | Jennifer
+| ? | testArchiveTreatment | Justin
