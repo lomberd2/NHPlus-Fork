@@ -23,7 +23,7 @@ import java.time.LocalDate;
 
 
 /**
- * The <code>AllPatientController</code> contains the entire logic of the patient view.
+ * The <code>AllCaregiverController</code> contains the entire logic of the caregiver view.
  * It determines which data is displayed and how to react to events.
  */
 public class AllCaregiverController {
@@ -71,9 +71,8 @@ public class AllCaregiverController {
 
         this.colID.setCellValueFactory(new PropertyValueFactory<>("cid"));
 
-        // CellValueFactory to show property values in TableView
         this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        // CellFactory to write property values from with in the TableView
+
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
@@ -111,9 +110,6 @@ public class AllCaregiverController {
             exception.printStackTrace();
         }
     }
-
-
-
     /**
      * This method handles the events fired by the button to add a caregiver. It collects the data from the
      * <code>TextField</code>s, creates an object of class <code>Caregiver</code> of it and passes the object to

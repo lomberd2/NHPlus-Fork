@@ -16,4 +16,5 @@ module de.hitec.nhplus {
     exports de.hitec.nhplus.controller;
     exports de.hitec.nhplus.model;
     exports de.hitec.nhplus.datastorage;
+    exports de.hitec.nhplus.utils;
 }

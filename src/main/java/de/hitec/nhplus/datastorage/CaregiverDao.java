@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class CaregiverDao extends DaoImp<Caregiver> {
 
     /**
-     * The constructor initiates an object of <code>PatientDao</code> and passes the connection to its super class.
+     * The constructor initiates an object of <code>CaregiverDao</code> and passes the connection to its super class.
      *
      * @param connection Object of <code>Connection</code> to execute the SQL-statements.
      */
@@ -27,10 +27,10 @@ public class CaregiverDao extends DaoImp<Caregiver> {
     }
 
     /**
-     * Generates a <code>PreparedStatement</code> to persist the given object of <code>Patient</code>.
+     * Generates a <code>PreparedStatement</code> to persist the given object of <code>Caregiver</code>.
      *
-     * @param caregiver Object of <code>Patient</code> to persist.
-     * @return <code>PreparedStatement</code> to insert the given patient.
+     * @param caregiver Object of <code>Caregiver</code> to persist.
+     * @return <code>PreparedStatement</code> to insert the given caregiver.
      */
     @Override
     protected PreparedStatement getCreateStatement(Caregiver caregiver) {
@@ -49,9 +49,9 @@ public class CaregiverDao extends DaoImp<Caregiver> {
     }
 
     /**
-     * Generates a <code>PreparedStatement</code> to query a patient by a given caregiver id (cid).
+     * Generates a <code>PreparedStatement</code> to query a caregiver by a given caregiver id (cid).
      *
-     * @param cid Patient id to query.
+     * @param cid Caregiver id to query.
      * @return <code>PreparedStatement</code> to query the caregiver.
      */
     @Override
@@ -68,7 +68,7 @@ public class CaregiverDao extends DaoImp<Caregiver> {
     }
 
     /**
-     * Maps a <code>ResultSet</code> of one patient to an object of <code>Patient</code>.
+     * Maps a <code>ResultSet</code> of one caregiver to an object of <code>Caregiver</code>.
      *
      * @param result ResultSet with a single row. Columns will be mapped to an object of class <code>Caregiver</code>.
      * @return Object of class <code>Caregiver</code> with the data from the resultSet.
@@ -83,9 +83,9 @@ public class CaregiverDao extends DaoImp<Caregiver> {
     }
 
     /**
-     * Generates a <code>PreparedStatement</code> to query all patients.
+     * Generates a <code>PreparedStatement</code> to query all caregiver.
      *
-     * @return <code>PreparedStatement</code> to query all patients.
+     * @return <code>PreparedStatement</code> to query all caregiver.
      */
     @Override
     protected PreparedStatement getReadAllStatement() {
