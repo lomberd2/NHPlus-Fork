@@ -60,9 +60,6 @@ public class ManageUserController {
 
             while (resultSet.next()) {
                 User user = User.fromResultSet(resultSet);
-
-                System.out.println(user);
-
                 tableView.getItems().add(user);
             }
 

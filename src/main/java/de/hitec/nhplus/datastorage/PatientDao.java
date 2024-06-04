@@ -3,7 +3,10 @@ package de.hitec.nhplus.datastorage;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.utils.DateConverter;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -31,7 +34,6 @@ public class PatientDao extends DaoImp<Patient> {
     @Override
     protected PreparedStatement getCreateStatement(Patient patient) {
         PreparedStatement preparedStatement = null;
-        // TODO - assets aus INSER raus genommen + Values ? rauis.
         try {
             final String SQL = "INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomnumber) " +
                     "VALUES (?, ?, ?, ?, ?)";
@@ -41,7 +43,6 @@ public class PatientDao extends DaoImp<Patient> {
             preparedStatement.setString(3, patient.getDateOfBirth());
             preparedStatement.setString(4, patient.getCareLevel());
             preparedStatement.setString(5, patient.getRoomNumber());
-            //preparedStatement.setString(6, patient.getAssets()); - TODO - entfernt
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -82,7 +83,6 @@ public class PatientDao extends DaoImp<Patient> {
                 DateConverter.convertStringToLocalDate(result.getString(4)),
                 result.getString(5),
                 result.getString(6));
-                // TODO - deleted getString nr 7
     }
 
     /**
@@ -120,8 +120,6 @@ public class PatientDao extends DaoImp<Patient> {
             list.add(patient);
         }
         return list;
-
-        // TODO - deleted result.getString(7)
     }
 
     /**
