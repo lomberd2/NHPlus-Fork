@@ -40,10 +40,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
-        //mainWindow();
         cryptoSetupLogin();
-
-        //showManageUser();
     }
 
     public static void mainWindow() {
