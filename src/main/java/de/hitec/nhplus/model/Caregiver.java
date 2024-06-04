@@ -19,9 +19,9 @@ public class Caregiver extends Person {
      * Constructor to initiate an object of class <code>Caregiver</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a caregiver id (cid).
      *
-     * @param firstName First name of the patient.
-     * @param surname Last name of the patient.
-     * @param telephone of birth of the patient.
+     * @param firstName First name of the caregiver.
+     * @param surname Last name of the caregiver.
+     * @param telephone telephone number of the caregiver.
      */
     public Caregiver(String firstName, String surname, String telephone) {
         super(firstName, surname);
@@ -32,10 +32,10 @@ public class Caregiver extends Person {
      * Constructor to initiate an object of class <code>Caregiver</code> with the given parameter. Use this constructor
      * to initiate objects, which are already persisted and have a caregiver id (cid).
      *
-     * @param cid Patient id.
-     * @param firstName First name of the patient.
-     * @param surname Last name of the patient.
-     * @param telephone Date of birth of the patient.
+     * @param cid caregiver id.
+     * @param firstName First name of the caregiver.
+     * @param surname Last name of the caregiver.
+     * @param telephone Date of birth of the caregiver.
      */
     public Caregiver(long cid, String firstName, String surname, String telephone) {
         super(firstName, surname);
@@ -47,10 +47,6 @@ public class Caregiver extends Person {
         return cid.get();
     }
 
-    public SimpleLongProperty pidProperty() {
-        return cid;
-    }
-
     public String getTelephone() {
         return telephone.get();
     }
@@ -58,8 +54,6 @@ public class Caregiver extends Person {
     public void setTelephone(String telephone) {
         this.telephone.set(telephone);
     }
-
-
 
     public String toString() {
         return "Pfleger" + "\nMNID: " + this.cid +

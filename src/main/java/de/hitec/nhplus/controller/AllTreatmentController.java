@@ -142,7 +142,12 @@ public class AllTreatmentController {
         Treatment t = this.treatments.remove(index);
         archiveTreatment(t);
     }
-
+    /**
+     * This method archives a treatment by inserting the treatment's data into the ArchivedTreatment table in the database.
+     * It also deletes the treatment from the current Treatment table.
+     *
+     * @param treatment The treatment object that is to be archived.
+     */
     private void archiveTreatment(Treatment treatment) {
         ArchivedTreatmentDao archivedTreatmentDao = DaoFactory.getDaoFactory().createArchivedTreatmentDao();
         try {
