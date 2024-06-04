@@ -51,6 +51,9 @@ public class Caregiver extends Person {
         return telephone.get();
     }
 
+    public void setTelephone(String telephone) {
+        this.telephone.set(telephone);
+    }
 
     public String toString() {
         return "Pfleger" + "\nMNID: " + this.cid +
